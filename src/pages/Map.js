@@ -14,13 +14,13 @@ export const Map = () => {
   }, []);
 
   return (
-    <Container>
-      <div className="min-vh-100 d-lg-flex d-flex flex-column flex-lg-row m-5  align-items-center justify-content-center gap-5">
+    <Container className="min-vw-100">
+      <div className="min-vh-100 d-flex p-5 flex-column flex-lg-row m-5  align-items-center justify-content-evenly gap-5">
         <MapContainer
-          className="flex-grow-1 rounded-3 flex-lg order-lg-last"
+          className="rounded-5 order-lg-last ms-5"
           style={{
             height: "600px",
-            width: "600px",
+            width: "800px",
           }}
           center={position}
           zoom={13}
