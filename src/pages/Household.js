@@ -1,3 +1,66 @@
+//import Image from "react-bootstrap/Image";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+
 export default function Household() {
-  return <div>Hello world</div>;
+  return (
+  <Container>
+    <Row>
+      <Col xs={8}>
+        <div>Aqui van imagenes</div>
+      </Col>
+      <Col xs={4} className="mt-5">
+        <Form className="list-group mb-3 d-flex">
+          <Row className="list-group-item d-flex justify-content-between lh-sm">
+            
+            <Form.Label className="small my-0">Precio por Noche</Form.Label>
+            
+            <Form.Label className=" mt-2">$12</Form.Label>
+          </Row>
+          <Row className="list-group-item d-flex justify-content-between lh-sm">
+          <Col>
+              <Form.Group className="mw-25" controlId="startDate">
+                <Form.Label className="small">Fecha Inicio</Form.Label>
+                <Form.Control type="date" placeholder="inicio"/>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mw-25" controlId="endDate">
+                <Form.Label className="small">Fecha Fin</Form.Label>
+                <Form.Control type="date" placeholder="final"/>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="list-group-item d-flex lh-sm">
+            <Form.Label className="small">Nº huéspedes</Form.Label>
+            <Form.Select className="w-25">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </Form.Select>
+          </Row>
+
+          <div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
+
+          <Row className="list-group-item d-flex justify-content-end">
+            <Form.Label className="big w-50 justify-content-start">Total:</Form.Label>
+            <Form.Label className="big w-50 justify-content-end">25$</Form.Label>
+          </Row>
+
+          <Row className="list-group-item d-flex justify-content-between lh-sm">
+          <Button variant="primary" type="submit"> Reservar </Button>
+          </Row>
+         
+          
+        </Form>
+      </Col>
+    </Row>
+  </Container>
+  );
 }
