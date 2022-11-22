@@ -1,17 +1,32 @@
 import { MapForm } from "../components/Map/MapForm";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, useMap } from "react-leaflet";
 import Container from "react-bootstrap/Container";
 import "leaflet/dist/leaflet.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {iconPerson} from "../components/Map/markerLeafLet";
 
-const position = [51.505, -0.09];
+const MyMap = ({position}) => {
+  const map = useMap()
+  console.log(map)
+  useEffect(() => {
+    //Center map on position
+    console.log('map center:', map.getCenter())
+    map.flyTo([position.lat,position.lng]);
+    
+  }, [position, map]);
+
+  return null
+};
 
 export const Map = () => {
-  useEffect(() => {
-    return;
-  }, []);
+ 
+  const [position, setPosition] = useState({
+    lat: 41.3851,
+    lng: 2.1734,
+  });
+  
 
   return (
     <Container className="min-vw-100">
@@ -26,17 +41,18 @@ export const Map = () => {
           zoom={13}
           scrollWheelZoom={false}
         >
+          <MyMap position={position}/>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={position}>
+          <Marker icon={iconPerson} position={position}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
           </Marker>
         </MapContainer>
-        <MapForm />
+        <MapForm setPosition={setPosition} />
       </div>
     </Container>
   );

@@ -6,14 +6,15 @@ const getBusByID = async (id) => {
   return data;
 };
 
-const getRouteTo = async (destination) => {
+const getCoords = async (address) => {
   const res = await fetch(
-    `https://nominatim.openstreetmap.org/search.php?q=${destination}&format=jsonv2&countrycodes=es&polygon_geojson=1`
+    `https://nominatim.openstreetmap.org/search.php?q=${address}&format=jsonv2&countrycodes=es&polygon_geojson=1`
   );
   const data = await res.json();
   const { lat, lon, geojson } = data[0];
   return { lat: lat, lon: lon, geojson: geojson };
 };
+ 
 
 const getCurrentCoords = async () => {
   return new Promise((resolve, _) =>
@@ -36,4 +37,4 @@ const getTodayForecast = async () => {
   return res.json();
 };
 
-export { getBusByID, getRouteTo, getNearbyBuses, getTodayForecast };
+export { getBusByID, getCoords, getNearbyBuses, getTodayForecast };
