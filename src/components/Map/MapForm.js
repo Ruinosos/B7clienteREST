@@ -2,13 +2,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { getNearbyBuses } from "../../api/FetchOpenData";
+import { getCoords, getNearbyBuses } from "../../api/FetchOpenData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
 import { Link } from "react-router-dom";
 import { Popup } from "react-leaflet";
 
-export const MapForm = () => {
+export const MapForm = ({ setPosition }) => {
   const getCurrentDate = () => {
     return new Date().toISOString().slice(0, 10);
   };
@@ -69,6 +69,9 @@ export const MapForm = () => {
     event.preventDefault();
     setIsLoading(true);
     // TODO: Fetch household given the form data (address, startDate, endDate, radius (default to 500m))
+    const coords = await getCoords(formData.addressInput)
+    setPosition({ lat: coords.lat, lng: coords.lon });
+    setIsLoading(false);
     console.log(await getNearbyBuses());
     setIsLoading(false);
   };
