@@ -5,6 +5,8 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { getNearbyBuses } from "../../api/FetchOpenData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
+import { Link } from "react-router-dom";
+import { Popup } from "react-leaflet";
 
 export const MapForm = () => {
   const getCurrentDate = () => {
@@ -27,6 +29,41 @@ export const MapForm = () => {
       </div>
     );
   };
+  const showRouteTo = () => {
+    // TODO: Shows in map the route from current to
+    console.log("cómo llegar clicked");
+  };
+
+  const createHouseholdPopup = (data) => {
+    const { title, price, rating, image, address } = data;
+    return (
+      <Popup>
+        <img src={image} alt="household" width={500} height={500} />
+        <p>{title}</p>
+        <p>{price} €/noche </p>
+        <p>Valoración: {rating}</p>
+        <button onClick={() => showRouteTo(address)}>Cómo llegar?</button>
+        <Link to="/household">Ver detalles</Link>
+      </Popup>
+    );
+  };
+
+  const getHourFromDatetime = (datetime) => datetime.substring(11, 19);
+
+  const createBusPopup = (data) => {
+    const {
+      codLinea: lineCode,
+      sentido: direction,
+      last_update: lastUpdate,
+    } = data;
+    return (
+      <Popup>
+        <p>Línea: {lineCode}</p>
+        <p>Sentido: {direction === 1 ? "Ida" : "Vuelta"}</p>
+        <p>Ultima actualización: {getHourFromDatetime(lastUpdate)}</p>
+      </Popup>
+    );
+  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -36,7 +73,7 @@ export const MapForm = () => {
     setIsLoading(false);
   };
 
-  // Fetch bus data every 10s
+  // Fetch bus live data every 10s
   const REFRESH_RATE_MS = 10000;
 
   useInterval(async () => {
