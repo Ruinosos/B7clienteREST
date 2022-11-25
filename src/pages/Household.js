@@ -25,7 +25,51 @@ const MyMap = ({position}) => {
 
   return null
 };
+ 
+/*
+function imgur() {
+  const [file, setFile] = useState();
+  const onFileChange = (event) => {
+    // Updating the state
+    setFile({ file: event.target.files[0] });
+  };
+  const onFileUpload = async () => {
+    // Client ID
+    const clientId = "fd2e1e3d3d12ce1",
+      auth = "Client-ID " + clientId;
+  
+    // Creating an object of formData
+    const formData = new FormData();
+  
+    // Adding our image to formData
+    formData.append("file", file);
+  
+    // Making the post request
+    await fetch("https://api.imgur.com/3/image/", {
+      // API Endpoint
+      method: "POST", // HTTP Method
+      body: formData, // Data to be sent
+      headers: {
+        // Setting header
+        Authorization: auth,
+        Accept: "application/json",
+      },
+    })
+      // Handling success
+      .then((res) => alert("image uploaded") && console.log(res)) 
+      .catch((err) => alert("Failed") && console.log(err)); 
+  };
+  
 
+
+  return (
+    <>
+      <input name="file" type="file" onChange={onFileChange} />
+      <button onClick={onFileUpload}>Upload</button>
+    </>
+  );
+}
+*/
  
  
 
@@ -56,17 +100,47 @@ export default function Household() {
         <Row>
           <h4>Comentarios</h4>
 
-          <Col xs={6}>
-            <h5>Comentario 1</h5>
+          <Col className="list-group mb-3 d-flex mr-5">
+
+          <Row className = "list-group-item d-flex justify-content-between lh-sm">
+              <Col>
+                <div>Foto usuario</div>
+              </Col>
+
+              <Col>
+                <div>Nombre usuario</div>
+              </Col>
+              
+          </Row>
+
+          <Row className = "list-group-item d-flex justify-content-between lh-sm">
+            <div>Comentario</div>
+          </Row>
+            
           </Col>
 
-          <Col xs={6}>
-            <h5>Comentario 2</h5>
+          <Col className="list-group mb-3 d-flex ml-5">
+
+          <Row className = "list-group-item d-flex justify-content-between lh-sm">
+              <Col>
+                <div>Foto usuario</div>
+              </Col>
+
+              <Col>
+                <div>Nombre usuario</div>
+              </Col>
+              
+          </Row>
+
+          <Row className = "list-group-item d-flex justify-content-between lh-sm">
+            <div>Comentario</div>
+          </Row>
+            
           </Col>
           
         </Row>
              
-        <Row>
+        <Row className="mt-5">
           <h4>Mapa</h4>
 
           <Col xs={6}>
