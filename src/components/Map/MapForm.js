@@ -2,13 +2,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { getNearbyBuses } from "../../api/FetchOpenData";
+import { getCoords } from "../../api/FetchOpenData";
+import { getHouseholdNearbyByCoords } from "../../api/FetchHouseholdData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
-import { Link } from "react-router-dom";
-import { Popup } from "react-leaflet";
 
-export const MapForm = () => {
+export const MapForm = ({ setHouseholdMarkers, setPosition }) => {
   const getCurrentDate = () => {
     return new Date().toISOString().slice(0, 10);
   };
@@ -29,54 +28,27 @@ export const MapForm = () => {
       </div>
     );
   };
-  const showRouteTo = () => {
-    // TODO: Shows in map the route from current to
-    console.log("cómo llegar clicked");
-  };
-
-  const createHouseholdPopup = (data) => {
-    const { title, price, rating, image, address } = data;
-    return (
-      <Popup>
-        <img src={image} alt="household" width={500} height={500} />
-        <p>{title}</p>
-        <p>{price} €/noche </p>
-        <p>Valoración: {rating}</p>
-        <button onClick={() => showRouteTo(address)}>Cómo llegar?</button>
-        <Link to="/household">Ver detalles</Link>
-      </Popup>
-    );
-  };
-
-  const getHourFromDatetime = (datetime) => datetime.substring(11, 19);
-
-  const createBusPopup = (data) => {
-    const { lineCode, direction, lastUpdate } = data;
-    return (
-      <Popup>
-        <p>Línea: {lineCode}</p>
-        <p>Sentido: {direction === 1 ? "Ida" : "Vuelta"}</p>
-        <p>Ultima actualización: {getHourFromDatetime(lastUpdate)}</p>
-      </Popup>
-    );
-  };
-
-  const createBusStopPopup = (data) => {
-    const { lineCode, lineName, direction, stopName } = data;
-    return (
-      <Popup>
-        <p>Línea: {`${lineCode} ${lineName}`}</p>
-        <p>Parada: {stopName}</p>
-        <p>Sentido: {direction === 1 ? "Ida" : "Vuelta"}</p>
-      </Popup>
-    );
-  };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     // TODO: Fetch household given the form data (address, startDate, endDate, radius (default to 500m))
-    console.log(await getNearbyBuses());
+    // console.log(await getNearbyBuses());
+    const { addressInput, startingDate, endingDate, radius } = formData;
+    const { lat, lon } = await getCoords(addressInput);
+    setPosition({ lat: lat, lng: lon });
+
+    const datetimeStart = startingDate + "T00:00:00";
+    const datetimeEnd = endingDate + "T23:59:59";
+    const householdData = await getHouseholdNearbyByCoords(
+      lat,
+      lon,
+      radius,
+      datetimeStart,
+      datetimeEnd
+    );
+    console.log(householdData);
+    setHouseholdMarkers(householdData);
     setIsLoading(false);
   };
 

@@ -11,6 +11,7 @@ const getCoords = async (address) => {
     `https://nominatim.openstreetmap.org/search.php?q=${address}&format=jsonv2&countrycodes=es&polygon_geojson=1`
   );
   const data = await res.json();
+  console.log(data);
   const { lat, lon, geojson } = data[0];
   return { lat: lat, lon: lon, geojson: geojson };
 };

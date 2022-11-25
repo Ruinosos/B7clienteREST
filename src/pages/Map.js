@@ -2,38 +2,38 @@ import { MapForm } from "../components/Map/MapForm";
 import { ClimateInfo } from "../components/Map/ClimateInfo";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
-import { Marker, Popup, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import Container from "react-bootstrap/Container";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
-import {iconPerson} from "../components/Map/markerLeafLet";
+import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 
-const MyMap = ({position}) => {
-  const map = useMap()
+const MyMap = ({ position }) => {
+  const map = useMap();
   useEffect(() => {
     //Center map on position
-    map.flyTo([position.lat,position.lng]);
-    
+    map.flyTo([position.lat, position.lng]);
   }, [position, map]);
 
-  return null
+  return null;
 };
 
 export const Map = () => {
- 
   const [position, setPosition] = useState({
     lat: 41.3851,
     lng: 2.1734,
   });
-  
+
+  const [householdMarkers, setHouseholdMarkers] = useState([]);
+  const [busMarkers, setBusMarkers] = useState([]);
+  const [busStopMarkers, setBusStopMarkers] = useState([]);
+
+  console.log(householdMarkers);
 
   return (
-    
     <Container className="min-vw-100">
+      <ClimateInfo />
 
-
-      <ClimateInfo/>
-      
       <div className="min-vh-50 d-flex p-5 flex-column flex-lg-row m-5 align-items-center justify-content-evenly gap-5">
         <MapContainer
           className="rounded-5 order-lg-last ms-5"
@@ -45,19 +45,21 @@ export const Map = () => {
           zoom={13}
           scrollWheelZoom={false}
         >
-          <MyMap position={position}/>
+          <MyMap position={position} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker icon={iconPerson} position={position}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
+          {householdMarkers && (
+            <HouseholdMarkers requestData={householdMarkers} />
+          )}
+          {/* {busMarkers && <BusMarkers requestData={busMarkers}/>} */}
+          {/* {busStopsMarkers && <BusMarkers requestData={busStopsMarkers}/>} */}
         </MapContainer>
-        <MapForm setPosition={setPosition} />
-        
+        <MapForm
+          setPosition={setPosition}
+          setHouseholdMarkers={setHouseholdMarkers}
+        />
       </div>
     </Container>
   );
