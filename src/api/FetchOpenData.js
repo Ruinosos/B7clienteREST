@@ -14,7 +14,14 @@ const getCoords = async (address) => {
   const { lat, lon, geojson } = data[0];
   return { lat: lat, lon: lon, geojson: geojson };
 };
- 
+
+const getNearbyBusStops = async () => {
+  const { latitude, longitude } = await getCurrentCoords();
+  const res = await fetch(
+    `${API_BASE_URL}/bus-stops/search/nearby?lat=${latitude}&lon=${longitude}`
+  );
+  return res.json();
+};
 
 const getCurrentCoords = async () => {
   return new Promise((resolve, _) =>
@@ -25,9 +32,9 @@ const getCurrentCoords = async () => {
 };
 
 const getNearbyBuses = async () => {
-  const current = await getCurrentCoords();
+  const { latitude, longitude } = await getCurrentCoords();
   const res = await fetch(
-    `${API_BASE_URL}/buses/search/nearby?lat=${current.latitude}&lon=${current.longitude}`
+    `${API_BASE_URL}/buses/search/nearby?lat=${latitude}&lon=${longitude}`
   );
   return res.json();
 };
@@ -37,4 +44,10 @@ const getTodayForecast = async () => {
   return res.json();
 };
 
-export { getBusByID, getCoords, getNearbyBuses, getTodayForecast };
+export {
+  getBusByID,
+  getCoords,
+  getNearbyBuses,
+  getTodayForecast,
+  getNearbyBusStops,
+};
