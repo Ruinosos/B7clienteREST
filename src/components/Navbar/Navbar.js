@@ -9,7 +9,8 @@ export const NavbarComponent = () => {
             </Container>
             <Container className="d-flex justify-content-end align-items-center mx-auto">
                 <Nav>
-                    <Nav.Link href="/map">Ubicación</Nav.Link>
+                    <Nav.Link href="/createHousehold">Crear Anuncio</Nav.Link>
+                    <Nav.Link href="/map">Buscar Ubicación</Nav.Link>
                     <NavDropdown title="Perfil" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Ver Perfil</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Cerrar Sesión</NavDropdown.Item>
