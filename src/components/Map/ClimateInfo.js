@@ -10,7 +10,7 @@ import {
   MDBTypography,
 } from "mdb-react-ui-kit";
 import { useInterval } from "../../hooks/useInterval";
-import {currentValue, currentSkyDescriptionInPeriod} from "../../utils/forecastData";
+import {currentValue, currentSkyDescriptionInPeriod, getUrlImage} from "../../utils/forecastData";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
@@ -95,7 +95,7 @@ useInterval(async () => {
                   </div>
                   <div>
                     <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu1.webp"
+                      src={getUrlImage(climate.description)}
                       alt="weather"
                       width="100px"
                     />
