@@ -2,11 +2,46 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+
 import { getCoords, getNearbyBuses } from "../../api/FetchOpenData";
+import { getHouseholdNearbyByCoords } from "../../api/FetchHouseholdData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
 import { Link } from "react-router-dom";
-import { Popup } from "react-leaflet";
+import { Popup, Marker } from "react-leaflet";
+
+const showRouteTo = () => {
+  // TODO: Shows in map the route from current to
+  console.log("cómo llegar clicked");
+};
+
+const createHouseholdPopup = (data) => {
+  const { title, price, rating, image, address } = data;
+  return (
+    <Popup>
+      <img src={image} alt="household" width={500} height={500} />
+      <p>{title}</p>
+      <p>{price} €/noche </p>
+      <p>Valoración: {rating}</p>
+      <button onClick={() => showRouteTo(address)}>Cómo llegar?</button>
+      <Link to="/household">Ver detalles</Link>
+    </Popup>
+  );
+};
+
+
+export const renderHouseholdMarkers = (households) => {
+  return households.map((household) => {
+    const { lat, lon } = household;
+    return (
+      <Marker position={[lat, lon]} key={household.id}>
+        {createHouseholdPopup(household)}
+      </Marker>
+    );
+  });
+};
+
+
 
 export const MapForm = ({ setPosition }) => {
   const getCurrentDate = () => {
@@ -29,24 +64,7 @@ export const MapForm = ({ setPosition }) => {
       </div>
     );
   };
-  const showRouteTo = () => {
-    // TODO: Shows in map the route from current to
-    console.log("cómo llegar clicked");
-  };
 
-  const createHouseholdPopup = (data) => {
-    const { title, price, rating, image, address } = data;
-    return (
-      <Popup>
-        <img src={image} alt="household" width={500} height={500} />
-        <p>{title}</p>
-        <p>{price} €/noche </p>
-        <p>Valoración: {rating}</p>
-        <button onClick={() => showRouteTo(address)}>Cómo llegar?</button>
-        <Link to="/household">Ver detalles</Link>
-      </Popup>
-    );
-  };
 
   const getHourFromDatetime = (datetime) => datetime.substring(11, 19);
 
@@ -69,11 +87,16 @@ export const MapForm = ({ setPosition }) => {
     event.preventDefault();
     setIsLoading(true);
     // TODO: Fetch household given the form data (address, startDate, endDate, radius (default to 500m))
-    const coords = await getCoords(formData.addressInput)
-    setPosition({ lat: coords.lat, lng: coords.lon });
+    const {lat,  lon} = await getCoords(formData.addressInput)
+    setPosition({ lat: lat, lng: lon });;
     setIsLoading(false);
-    console.log(await getNearbyBuses());
+    //console.log(await getNearbyBuses());
     setIsLoading(false);
+    const datetimeStart = formData.startingDate + "T00:00:00";
+    const datetimeEnd = formData.endingDate + "T23:59:59";
+    const householdData = await getHouseholdNearbyByCoords(lat, lon, formData.radius, datetimeStart, datetimeEnd);
+    console.log(householdData)
+    renderHouseholdMarkers(householdData);
   };
 
   // Fetch bus live data every 10s

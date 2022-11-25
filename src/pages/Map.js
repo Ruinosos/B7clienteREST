@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import {iconPerson} from "../components/Map/markerLeafLet";
-
+import { renderHouseholdMarkers } from "../components/Map/MapForm";
 const MyMap = ({position}) => {
   const map = useMap()
   useEffect(() => {
@@ -56,6 +56,7 @@ export const Map = () => {
             </Popup>
           </Marker>
         </MapContainer>
+        <renderHouseholdMarkers/>
         <MapForm setPosition={setPosition} />
         
       </div>

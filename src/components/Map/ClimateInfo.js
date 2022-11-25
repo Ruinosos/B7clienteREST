@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getTodayForecast } from "../../api/FetchOpenData";
 import {
   MDBCard,
@@ -9,12 +9,14 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
-import { useInterval } from "../../hooks/useInterval";
+import { Spinner } from "../../components/Spinner/Spinner"; 
 import {currentValue, currentSkyDescriptionInPeriod, getUrlImage} from "../../utils/forecastData";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 export const ClimateInfo = () => {
+
+  const [loading, setLoading] = useState(true);
 
   const [climate, setClimate] = useState({
     currentTemp: 0,
@@ -36,22 +38,23 @@ const createForecast = async () => {
               humidity: currentValue(forecast.humedadRelativa.dato, currentHour),
               windSpeed: forecast.viento[2].velocidad,
               description: currentSkyDescriptionInPeriod(forecast.estadoCielo, currentHour),});
+  setLoading(false);
 
 };
 
-// Fetch bus data every 10s
-const REFRESH_RATE_MS = 10000;
-
-useInterval(async () => {
+useEffect(() => {
   createForecast();
-}, REFRESH_RATE_MS);
+},[])
+
 
     return (
-      <MDBContainer className="h-100 mt-5 align-self-end">
-        <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol md="8" lg="6" xl="6">
-            <MDBCard style={{ color: "#4B515D", borderRadius: "35px" }}>
+      <MDBContainer className="h-25 mt-5">
+        <MDBRow className="justify-content-center align-items-center h-25">
+          <MDBCol md="2" lg="2" xl="2">
+            <MDBCard className="d-flex justify-content-center align-items-center" style={{ color: "#4B515D", borderRadius: "35px" }}>
+              {loading ? (<Spinner/>) : (
               <MDBCardBody className="p-4">
+                <>
                 <div className="d-flex">
                   <MDBTypography tag="h6" className="flex-grow-1">
                     Malaga
@@ -97,11 +100,13 @@ useInterval(async () => {
                     <img
                       src={getUrlImage(climate.description)}
                       alt="weather"
-                      width="100px"
+                      width="50px"
                     />
                   </div>
                 </div>
+                </>
               </MDBCardBody>
+            )}
             </MDBCard>
           </MDBCol>
         </MDBRow>
