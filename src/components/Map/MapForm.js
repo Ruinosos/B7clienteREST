@@ -44,7 +44,7 @@ export const MapForm = ({ setPosition }) => {
 
   useInterval(async () => {
     // TODO: Print in map
-    console.log(await getNearbyBuses());
+    // console.log(await getNearbyBuses());
   }, REFRESH_RATE_MS);
 
   const updateFormData = (event) => {

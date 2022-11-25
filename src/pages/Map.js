@@ -1,4 +1,5 @@
 import { MapForm } from "../components/Map/MapForm";
+import { ClimateInfo } from "../components/Map/ClimateInfo";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { Marker, Popup, useMap } from "react-leaflet";
@@ -9,10 +10,8 @@ import {iconPerson} from "../components/Map/markerLeafLet";
 
 const MyMap = ({position}) => {
   const map = useMap()
-  console.log(map)
   useEffect(() => {
     //Center map on position
-    console.log('map center:', map.getCenter())
     map.flyTo([position.lat,position.lng]);
     
   }, [position, map]);
@@ -29,8 +28,13 @@ export const Map = () => {
   
 
   return (
+    
     <Container className="min-vw-100">
-      <div className="min-vh-100 d-flex p-5 flex-column flex-lg-row m-5  align-items-center justify-content-evenly gap-5">
+
+
+      <ClimateInfo/>
+      
+      <div className="min-vh-50 d-flex p-5 flex-column flex-lg-row m-5 align-items-center justify-content-evenly gap-5">
         <MapContainer
           className="rounded-5 order-lg-last ms-5"
           style={{
@@ -53,6 +57,7 @@ export const Map = () => {
           </Marker>
         </MapContainer>
         <MapForm setPosition={setPosition} />
+        
       </div>
     </Container>
   );
