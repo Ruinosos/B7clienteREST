@@ -2,12 +2,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { getCoords } from "../../api/FetchOpenData";
+import { getCoords, getNearbyBusStopsbyLatLon } from "../../api/FetchOpenData";
 import { getHouseholdNearbyByCoords } from "../../api/FetchHouseholdData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
 
-export const MapForm = ({ setHouseholdMarkers, setPosition }) => {
+export const MapForm = ({ setHouseholdMarkers, setBusStopMarkers, setPosition }) => {
   const getCurrentDate = () => {
     return new Date().toISOString().slice(0, 10);
   };
@@ -47,8 +47,15 @@ export const MapForm = ({ setHouseholdMarkers, setPosition }) => {
       datetimeStart,
       datetimeEnd
     );
-    console.log(householdData);
+
     setHouseholdMarkers(householdData);
+
+    const busStopData = await getNearbyBusStopsbyLatLon(
+      lat,
+      lon,
+    );
+    console.log(busStopData);
+    setBusStopMarkers(busStopData.datos);
     setIsLoading(false);
   };
 

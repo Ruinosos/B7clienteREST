@@ -24,6 +24,13 @@ const getNearbyBusStops = async () => {
   return res.json();
 };
 
+const getNearbyBusStopsbyLatLon = async (latitude, longitude) => {
+  const res = await fetch(
+    `${API_BASE_URL}/bus-stops/search/nearby?lat=${latitude}&lon=${longitude}`
+  );
+  return res.json();
+};
+
 const getCurrentCoords = async () => {
   return new Promise((resolve, _) =>
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
@@ -37,6 +44,7 @@ const getNearbyBuses = async () => {
   const res = await fetch(
     `${API_BASE_URL}/buses/search/nearby?lat=${latitude}&lon=${longitude}`
   );
+
   return res.json();
 };
 
@@ -51,4 +59,5 @@ export {
   getNearbyBuses,
   getTodayForecast,
   getNearbyBusStops,
+  getNearbyBusStopsbyLatLon,
 };

@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
+import { BusStopMarkers } from "../components/Map/BusStopMarkers";
 
 const MyMap = ({ position }) => {
   const map = useMap();
@@ -27,8 +28,6 @@ export const Map = () => {
   const [householdMarkers, setHouseholdMarkers] = useState([]);
   const [busMarkers, setBusMarkers] = useState([]);
   const [busStopMarkers, setBusStopMarkers] = useState([]);
-
-  console.log(householdMarkers);
 
   return (
     <Container className="min-vw-100">
@@ -54,11 +53,14 @@ export const Map = () => {
             <HouseholdMarkers requestData={householdMarkers} />
           )}
           {/* {busMarkers && <BusMarkers requestData={busMarkers}/>} */}
-          {/* {busStopsMarkers && <BusMarkers requestData={busStopsMarkers}/>} */}
+          {busStopMarkers && (
+            <BusStopMarkers requestData={busStopMarkers} />
+          )}
         </MapContainer>
         <MapForm
           setPosition={setPosition}
           setHouseholdMarkers={setHouseholdMarkers}
+          setBusStopMarkers={setBusStopMarkers}
         />
       </div>
     </Container>

@@ -1,13 +1,33 @@
-import { Popup } from "react-leaflet";
-const getHourFromDatetime = (datetime) => datetime.substring(11, 19);
+import React from "react";
+import { Popup, Marker } from "react-leaflet";
 
-const createBusPopup = (data) => {
-  const { codLinea: lineCode, sentido: direction, properties } = data;
+const createBusStopPopup = (data) => {
+  const {
+    codLinea: lineCode,
+    nombreLinea: lineName,
+    sentido: direction,
+    nombreParada: stopName,
+  } = data;
   return (
     <Popup>
-      <p>Línea: {lineCode}</p>
+      <p>Línea: {`${lineCode} ${lineName}`}</p>
+      <p>Parada: {stopName}</p>
       <p>Sentido: {direction === 1 ? "Ida" : "Vuelta"}</p>
-      <p>Ultima actualización: {getHourFromDatetime(properties.lastUpdate)}</p>
     </Popup>
   );
 };
+
+export const BusStopMarkers = ({ requestData }) => {
+  return (
+    <>
+      {requestData.map((stop,idx) => {
+        const { lat,lon } = stop;
+        return (
+          <Marker position={[lat, lon]} key={idx}>
+            {createBusStopPopup(stop)}
+          </Marker>
+        );
+      })}
+    </>
+  );
+}

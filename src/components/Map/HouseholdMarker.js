@@ -24,14 +24,14 @@ const createHouseholdPopup = (data) => {
 export const HouseholdMarkers = ({ requestData }) => {
   return (
     <>
-      {requestData.map((household) => {
+      {requestData.map((household,idx) => {
         return (
           <Marker
             position={[
               household.address.geojson.coordinates[1],
               household.address.geojson.coordinates[0],
             ]}
-            key={household.id}
+            key={idx}
           >
             {createHouseholdPopup(household)}
           </Marker>
