@@ -25,7 +25,7 @@ const MyMap = ({position}) => {
 
   return null
 };
-
+ 
 /*
 function imgur() {
   const [file, setFile] = useState();
