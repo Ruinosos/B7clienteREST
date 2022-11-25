@@ -9,8 +9,8 @@ export const CardComponent = ({url,text,time}) => {
                     <Card.Text>{text}</Card.Text>
                     <div className="d-flex justify-content-between align-items-center">
                         <ButtonGroup>
-                            <button type="button" className="btn btn-sm btn-primary">View</button>
-                            <button type="button" className="btn btn-sm btn-success">Edit</button>
+                            <a href='/household'><button type="button" className="btn btn-sm btn-primary">View</button></a>
+                            <a href='/household'><button type="button" className="btn btn-sm btn-success">Edit</button></a>
                             <button type="button" className="btn btn-sm btn-danger">Delete</button>
                         </ButtonGroup>
                         <div class="text-muted">{time}</div>

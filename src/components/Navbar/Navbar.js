@@ -3,11 +3,9 @@ import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
 export const NavbarComponent = () => {
     return (
         <Navbar bg="light">
-            <Container className="d-flex justify-content-start align-items-center mx-auto">
+            <Container className="d-flex justify-content-start align-items-center mx-1">
                 <Navbar.Brand href="#home">RoomTrackr</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            </Container>
-            <Container className="d-flex justify-content-end align-items-center mx-auto">
                 <Nav>
                     <Nav.Link href="/createHousehold">Crear Anuncio</Nav.Link>
                     <Nav.Link href="/map">Buscar Ubicación</Nav.Link>
