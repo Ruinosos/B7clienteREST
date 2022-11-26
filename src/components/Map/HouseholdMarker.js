@@ -1,5 +1,6 @@
 import { Marker, Popup } from "react-leaflet";
 import { Link } from "react-router-dom";
+import { iconDefault } from "./markerLeafLet";
 
 const showRouteTo = () => {
   // TODO: Shows in map the route from current to
@@ -32,6 +33,7 @@ export const HouseholdMarkers = ({ requestData }) => {
               household.address.geojson.coordinates[0],
             ]}
             key={idx}
+            icon={iconDefault}
           >
             {createHouseholdPopup(household)}
           </Marker>

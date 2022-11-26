@@ -11,3 +11,16 @@ const createBusPopup = (data) => {
     </Popup>
   );
 };
+
+export const BusMarkers = ({ requestData }) => {
+  
+      {requestData.map((bus,idx) => {
+        const { lat, lon } = bus.geometry.coordinates;
+        return (
+          <Marker position={[lat, lon]} key={idx}>
+            {createBusPopup(bus)}
+          </Marker>
+        );
+        
+        })}
+};

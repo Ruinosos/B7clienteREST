@@ -8,12 +8,14 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { BusStopMarkers } from "../components/Map/BusStopMarkers";
+import { NavbarComponent } from "../components/Navbar/Navbar";
+import { LayersControl, LayerGroup,  Marker, Popup } from "react-leaflet";
 
 const MyMap = ({ position }) => {
   const map = useMap();
   useEffect(() => {
     //Center map on position
-    map.flyTo([position.lat, position.lng]);
+    map.flyTo([position.lat, position.lng], 16.5);
   }, [position, map]);
 
   return null;
@@ -30,6 +32,8 @@ export const Map = () => {
   const [busStopMarkers, setBusStopMarkers] = useState([]);
 
   return (
+    <>
+    <NavbarComponent/>
     <Container className="min-vw-100">
       <ClimateInfo />
 
@@ -45,17 +49,36 @@ export const Map = () => {
           scrollWheelZoom={false}
         >
           <MyMap position={position} />
+
+          <LayersControl position="topright">
+            <LayersControl.Overlay checked name="Household Marker">
+            <LayerGroup>
+              {householdMarkers && (
+                <HouseholdMarkers requestData={householdMarkers} />
+              )}
+            </LayerGroup>
+            </LayersControl.Overlay>
+
+            <LayersControl.Overlay name="Stops Buses Marker">
+            <LayerGroup>
+              {busStopMarkers && (
+                <BusStopMarkers requestData={busStopMarkers} />
+              )}
+            </LayerGroup>
+            </LayersControl.Overlay>
+          </LayersControl>
+
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {householdMarkers && (
+          {/* {householdMarkers && (
             <HouseholdMarkers requestData={householdMarkers} />
-          )}
+          )} */}
           {/* {busMarkers && <BusMarkers requestData={busMarkers}/>} */}
-          {busStopMarkers && (
+          {/* {busStopMarkers && (
             <BusStopMarkers requestData={busStopMarkers} />
-          )}
+          )} */}
         </MapContainer>
         <MapForm
           setPosition={setPosition}
@@ -64,5 +87,6 @@ export const Map = () => {
         />
       </div>
     </Container>
+    </>
   );
 };
