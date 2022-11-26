@@ -1,5 +1,6 @@
 import React from "react";
 import { Popup, Marker } from "react-leaflet";
+import { iconBusStop } from "./markerLeafLet";
 
 const createBusStopPopup = (data) => {
   const {
@@ -23,7 +24,7 @@ export const BusStopMarkers = ({ requestData }) => {
       {requestData.map((stop,idx) => {
         const { lat,lon } = stop;
         return (
-          <Marker position={[lat, lon]} key={idx}>
+          <Marker position={[lat, lon]} key={idx} icon={iconBusStop}>
             {createBusStopPopup(stop)}
           </Marker>
         );

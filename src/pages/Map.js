@@ -8,12 +8,14 @@ import { useEffect, useState } from "react";
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { BusStopMarkers } from "../components/Map/BusStopMarkers";
 import "leaflet/dist/leaflet.css";
+import { NavbarComponent } from "../components/Navbar/Navbar";
+import { LayersControl, LayerGroup } from "react-leaflet";
 
 const MyMap = ({ position }) => {
   const map = useMap();
   useEffect(() => {
     //Center map on position
-    map.flyTo([position.lat, position.lng], 16);
+    map.flyTo([position.lat, position.lng], 16.5);
   }, [position, map]);
 
   return null;
@@ -31,37 +33,59 @@ export const Map = () => {
   const forecastPanelPosition = "leaflet-control leaflet-bottom leaflet-left";
 
   return (
-    <Container className="min-vw-100">
-      <div className="min-vh-50 d-flex p-5 flex-column flex-lg-row m-5 align-items-center justify-content-evenly gap-5 ">
-        <MapContainer
-          className="rounded-5 order-lg-last ms-5"
-          style={{
-            height: "600px",
-            width: "800px",
-          }}
-          center={position}
-          zoom={13}
-          scrollWheelZoom={false}
-        >
-          <ClimateInfo position={forecastPanelPosition} />
+    <>
+      <NavbarComponent />
+      <Container className="min-vw-100">
+        <div className="min-vh-50 d-flex p-5 flex-column flex-lg-row m-5 align-items-center justify-content-evenly gap-5 ">
+          <MapContainer
+            className="rounded-5 order-lg-last ms-5"
+            style={{
+              height: "600px",
+              width: "800px",
+            }}
+            center={position}
+            zoom={13}
+            scrollWheelZoom={false}
+          >
+            <ClimateInfo position={forecastPanelPosition} />
 
-          <MyMap position={position} />
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {householdMarkers && (
+            <MyMap position={position} />
+
+            <LayersControl position="topright">
+              <LayersControl.Overlay checked name="Household Marker">
+                <LayerGroup>
+                  {householdMarkers && (
+                    <HouseholdMarkers requestData={householdMarkers} />
+                  )}
+                </LayerGroup>
+              </LayersControl.Overlay>
+
+              <LayersControl.Overlay name="Stops Buses Marker">
+                <LayerGroup>
+                  {busStopMarkers && (
+                    <BusStopMarkers requestData={busStopMarkers} />
+                  )}
+                </LayerGroup>
+              </LayersControl.Overlay>
+            </LayersControl>
+
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {/* {householdMarkers && (
             <HouseholdMarkers requestData={householdMarkers} />
-          )}
-          {/* {busMarkers && <BusMarkers requestData={busMarkers}/>} */}
-          {busStopMarkers && <BusStopMarkers requestData={busStopMarkers} />}
-        </MapContainer>
-        <MapForm
-          setPosition={setPosition}
-          setHouseholdMarkers={setHouseholdMarkers}
-          setBusStopMarkers={setBusStopMarkers}
-        />
-      </div>
-    </Container>
+          )} */}
+            {/* {busMarkers && <BusMarkers requestData={busMarkers}/>} */}
+            {busStopMarkers && <BusStopMarkers requestData={busStopMarkers} />}
+          </MapContainer>
+          <MapForm
+            setPosition={setPosition}
+            setHouseholdMarkers={setHouseholdMarkers}
+            setBusStopMarkers={setBusStopMarkers}
+          />
+        </div>
+      </Container>
+    </>
   );
 };

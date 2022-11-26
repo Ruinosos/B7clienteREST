@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { useEffect, useState } from "react";
-import { iconPerson } from "../components/Map/markerLeafLet";
+import { iconDefault } from "../components/Map/markerLeafLet";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 
@@ -121,7 +121,7 @@ export default function Household() {
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker icon={iconPerson} position={position}>
+                <Marker icon={iconDefault} position={position}>
                   <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                   </Popup>
