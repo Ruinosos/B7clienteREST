@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 import { iconDefault } from "../components/Map/markerLeafLet";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
+import { getHouseholdByID } from "../../src/api/FetchDBData";
+import React from 'react';
+import {useParams} from 'react-router-dom';
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -69,8 +72,19 @@ function imgur() {
   );
 }
 */
+ 
+
+
 
 export default function Household() {
+  const useGetHousehold = async () => {
+    const params = useParams();
+    console.log(params.id);
+    const household = await getHouseholdByID(params.id);
+    console.log(household);
+  };
+  useGetHousehold()
+
   const [position] = useState({
     lat: 41.3851,
     lng: 2.1734,
