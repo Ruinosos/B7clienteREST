@@ -52,6 +52,14 @@ const getNearbyBuses = async () => {
   return res.json();
 };
 
+const getNearbyBusesbyLatLon = async (latitude,longitude) => {
+  const res = await fetch(
+    `${API_BASE_URL}/buses/search/nearby?lat=${latitude}&lon=${longitude}`
+  );
+
+  return res.json();
+};
+
 const getTodayForecast = async () => {
   const res = await fetch(`${API_BASE_URL}/forecasts/today`);
   return res.json();
@@ -64,4 +72,5 @@ export {
   getTodayForecast,
   getNearbyBusStops,
   getNearbyBusStopsbyLatLon,
+  getNearbyBusesbyLatLon,
 };

@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { getCoords, getNearbyBusStopsbyLatLon } from "../../api/FetchOpenData";
+import { getCoords, getNearbyBusStopsbyLatLon, getNearbyBusesbyLatLon } from "../../api/FetchOpenData";
 import { getHouseholdNearbyByCoords } from "../../api/FetchHouseholdData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
@@ -11,6 +11,7 @@ import { BootstrapModal } from "./InfoModal";
 export const MapForm = ({
   setHouseholdMarkers,
   setBusStopMarkers,
+  setBusMarkers,
   setPosition,
 }) => {
   const getCurrentDate = () => {
@@ -43,14 +44,14 @@ export const MapForm = ({
   const submitHandler = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    // TODO: Fetch household given the form data (address, startDate, endDate, radius (default to 500m))
-    // console.log(await getNearbyBuses());
+
     const { addressInput, startingDate, endingDate, radius } = formData;
     try {
       const { lat, lon } = await getCoords(addressInput);
       setPosition({ lat: lat, lng: lon });
       const datetimeStart = `${startingDate}T00:00:00`;
       const datetimeEnd = `${endingDate}T23:59:59`;
+
       const householdData = await getHouseholdNearbyByCoords(
         lat,
         lon,
@@ -63,6 +64,10 @@ export const MapForm = ({
 
       const busStopData = await getNearbyBusStopsbyLatLon(lat, lon);
       setBusStopMarkers(busStopData.datos);
+
+      const busData = await getNearbyBusesbyLatLon(lat, lon);
+      setBusMarkers(busData.datos);
+
     } catch (error) {
       setModalData((prev) => {
         return { ...prev, heading: "Error", body: error, show: true };
@@ -70,14 +75,16 @@ export const MapForm = ({
     } finally {
       setIsLoading(false);
     }
+
+      
   };
 
   // Fetch bus live data every 10s
   const REFRESH_RATE_MS = 10000;
 
   useInterval(async () => {
-    // TODO: Print in map
-    // console.log(await getNearbyBuses());
+    
+    
   }, REFRESH_RATE_MS);
 
   const updateFormData = (event) => {
@@ -103,7 +110,6 @@ export const MapForm = ({
       };
     });
   };
-  console.log(formData);
 
   return (
     <>

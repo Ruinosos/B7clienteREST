@@ -24,7 +24,11 @@ export const BusStopMarkers = ({ requestData }) => {
       {requestData.map((stop,idx) => {
         const { lat,lon } = stop;
         return (
-          <Marker position={[lat, lon]} key={idx} icon={iconBusStop}>
+          <Marker 
+            position={[lat, lon]} 
+            key={idx} 
+            icon={iconBusStop}
+          >
             {createBusStopPopup(stop)}
           </Marker>
         );

@@ -1,7 +1,7 @@
 import L from 'leaflet';
-import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import defaultMarker from "../../assets/imgs/map-marker.svg"
-import busStopMarker from '../../assets/imgs/bus-marker.svg';
+import busStopMarker from '../../assets/imgs/busStop-marker.svg';
+import busMarker from '../../assets/imgs/bus-marker.svg';
 
 const iconDefault = new L.Icon({
     iconUrl: defaultMarker,
@@ -15,4 +15,10 @@ const iconBusStop = new L.Icon({
     iconAnchor: [12, 41]
 });
 
-export { iconDefault, iconBusStop };
+const iconBus = new L.Icon({
+    iconUrl: busMarker,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+
+export { iconDefault, iconBusStop, iconBus };

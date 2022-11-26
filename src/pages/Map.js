@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import { useEffect, useState } from "react";
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { BusStopMarkers } from "../components/Map/BusStopMarkers";
+import { BusMarkers } from "../components/Map/BusMarkers";
 import "leaflet/dist/leaflet.css";
 import { NavbarComponent } from "../components/Navbar/Navbar";
 import { LayersControl, LayerGroup } from "react-leaflet";
@@ -52,6 +53,7 @@ export const Map = () => {
             <MyMap position={position} />
 
             <LayersControl position="topright">
+
               <LayersControl.Overlay checked name="Household Marker">
                 <LayerGroup>
                   {householdMarkers && (
@@ -60,29 +62,34 @@ export const Map = () => {
                 </LayerGroup>
               </LayersControl.Overlay>
 
-              <LayersControl.Overlay name="Stops Buses Marker">
+              <LayersControl.Overlay name="Bus Stops Marker">
                 <LayerGroup>
                   {busStopMarkers && (
                     <BusStopMarkers requestData={busStopMarkers} />
                   )}
                 </LayerGroup>
               </LayersControl.Overlay>
+
+              <LayersControl.Overlay name="Buses Marker">
+                <LayerGroup>
+                  {busMarkers && (
+                    <BusMarkers requestData={busMarkers} />
+                  )}
+                </LayerGroup>
+              </LayersControl.Overlay>
+
             </LayersControl>
 
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {/* {householdMarkers && (
-            <HouseholdMarkers requestData={householdMarkers} />
-          )} */}
-            {/* {busMarkers && <BusMarkers requestData={busMarkers}/>} */}
-            {busStopMarkers && <BusStopMarkers requestData={busStopMarkers} />}
           </MapContainer>
           <MapForm
             setPosition={setPosition}
             setHouseholdMarkers={setHouseholdMarkers}
             setBusStopMarkers={setBusStopMarkers}
+            setBusMarkers={setBusMarkers}
           />
         </div>
       </Container>
