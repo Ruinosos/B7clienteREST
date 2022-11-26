@@ -11,9 +11,13 @@ const getCoords = async (address) => {
     `https://nominatim.openstreetmap.org/search.php?q=${address}&format=jsonv2&countrycodes=es&polygon_geojson=1`
   );
   const data = await res.json();
-  console.log(data);
-  const { lat, lon, geojson } = data[0];
-  return { lat: lat, lon: lon, geojson: geojson };
+  return new Promise((resolve, reject) => {
+    if (data.length === 0) {
+      reject(`No existe la dirección ${address}.`);
+    }
+    const { lat, lon, geojson } = data[0];
+    resolve({ lat: lat, lon: lon, geojson: geojson });
+  });
 };
 
 const getNearbyBusStops = async () => {
