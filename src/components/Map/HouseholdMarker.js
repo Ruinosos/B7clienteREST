@@ -1,6 +1,7 @@
 import { Marker, Popup } from "react-leaflet";
 import { Link } from "react-router-dom";
 import { iconDefault } from "./markerLeafLet";
+import Image from "react-bootstrap/Image";
 
 const showRouteTo = () => {
   // TODO: Shows in map the route from current to
@@ -11,13 +12,17 @@ const createHouseholdPopup = (data) => {
   const { title, price_euro_per_night, rating, photo, address } = data;
   return (
     <Popup>
-      <p>{photo}</p>
-      {/* <img src={photo} alt="household" width={500} height={500} /> */}
+      <Image src={photo} alt="household"
+        style={{
+          height: "50px",
+          width: "100px"
+        }}
+      />
       <p>{title}</p>
       <p>{price_euro_per_night} €/noche </p>
       <p>Valoración: {rating}</p>
-      <button onClick={() => showRouteTo(address)}>Cómo llegar?</button>
-      <Link to="/household">Ver detalles</Link>
+      <button onClick={() => showRouteTo(address)}>Cómo llegar?</button><br/>
+      <Link className="mt-2 d-inline-block" to="/household">Ver detalles</Link>
     </Popup>
   );
 };

@@ -2,8 +2,8 @@ import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { MDBRow } from "mdb-react-ui-kit";
+import { MDBCol } from "mdb-react-ui-kit";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { useEffect, useState } from "react";
 import { iconDefault } from "../components/Map/markerLeafLet";
@@ -12,6 +12,7 @@ import { TileLayer } from "react-leaflet/TileLayer";
 import { getHouseholdByID } from "../../src/api/FetchDBData";
 import React from 'react';
 import {useParams} from 'react-router-dom';
+import {HouseholdMarkers} from "../components/Map/HouseholdMarker";
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -117,7 +118,19 @@ export default function Household() {
     
   });
 
+  const latlngObject = {
+    lat: household.address.geojson.coordinates[1],
+    lng: household.address.geojson.coordinates[0], 
+  }
+
+  const [showContact, setShowContact] = useState({
+    show: false,
+  });
   
+  const contactButtonHandler = () => {
+    setShowContact(prev => !prev)
+  }
+
   useEffect(() => {
     const temp = async () => {
       setHousehold(await getHousehold())
@@ -134,134 +147,140 @@ export default function Household() {
 
   return (
     <Container>
-      <Row>
-        <Col xs={8}>
-          <h1>{household.title}</h1>
+      <MDBRow className="mt-5">
+        <h1>{household.title}</h1>
+      </MDBRow>
+      <MDBRow>
+        <MDBCol md='8'>
+          <MDBRow>
+            <MDBCol md='11'>
+              <MDBRow>
+                <Image src={household.photo} className='image-thumbnail'></Image>
+              </MDBRow>
+            </MDBCol>
+          </MDBRow>
 
-
-          <Col xs={11}>
-            <Row>
-              <Image src={household.photo} className='image-thumbnail'></Image>
-            </Row>
-          </Col>
-
-          <Row>
+          <MDBRow className="mt-3">
             <h4>{household.description}</h4>
-          </Row>
+          </MDBRow>
 
-          <Row>
+          <MDBRow>
             <h4>Comentarios</h4>
 
-            <Col xs={6}>
+            <MDBCol md='6'>
               <h5>Comentario 1</h5>
-            </Col>
+            </MDBCol>
 
-            <Col xs={6}>
+            <MDBCol md='6'>
               <h5>Comentario 2</h5>
-            </Col>
-          </Row>
+            </MDBCol>
+          </MDBRow>
 
-          <Row>
-            <h4>Mapa</h4>
-
-            <Col xs={6}>
+          <MDBRow className="mb-5">
+            <MDBCol className="min-vh-50 d-flex flex-column flex-lg-row" md='11'>
               <MapContainer
-                className="rounded-5 order-lg-last ms-5"
+                className="rounded-5 order-lg-last"
                 style={{
-                  height: "500px",
-                  width: "700px",
+                  height: "400px",
+                  width: "100%",
                 }}
-                center={position}
-                zoom={15}
+                center={latlngObject}
+                zoom={16.5}
                 scrollWheelZoom={false}
               >
-                <MyMap position={position} />
+                <MyMap position={latlngObject} />
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker icon={iconDefault} position={position}>
-                  <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                  </Popup>
-                </Marker>
+                <HouseholdMarkers requestData={[household]}/>
               </MapContainer>
-            </Col>
-          </Row>
-        </Col>
+            </MDBCol>
+          </MDBRow>
+        </MDBCol>
 
-        <Col xs={4} className="mt-5">
+        <MDBCol md='4' className="mt-5 align-items-center">
           <Form className="list-group mb-3 d-flex">
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Form.Label className="small my-0">Precio por Noche</Form.Label>
-              <Form.Label className=" mt-2">${household.price_euro_per_night}</Form.Label>
-            </Row>
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Col>
-                <Form.Group className="mw-25" controlId="startDate">
-                  <Form.Label className="small">Fecha Inicio</Form.Label>
-                  <Form.Control type="date" placeholder="inicio" />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group className="mw-25" controlId="endDate">
-                  <Form.Label className="small">Fecha Fin</Form.Label>
-                  <Form.Control type="date" placeholder="final" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Form.Label className="small">Nº huéspedes</Form.Label>
-              <Form.Select className="w-25">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Select>
-            </Row>
+            <MDBCol>
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <Form.Label className="small my-0">Precio por Noche</Form.Label>
+                <Form.Label className=" mt-2">${household.price_euro_per_night}</Form.Label>
+              </MDBRow>
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol md='6'>
+                  <Form.Group className="mw-25" controlId="startDate">
+                    <Form.Label className="small">Fecha Inicio</Form.Label>
+                    <Form.Control type="date" placeholder="inicio" />
+                  </Form.Group>
+                </MDBCol>
+                <MDBCol md='6'>
+                  <Form.Group className="mw-25" controlId="endDate">
+                    <Form.Label className="small">Fecha Fin</Form.Label>
+                    <Form.Control type="date" placeholder="final" />
+                  </Form.Group>
+                </MDBCol>
+              </MDBRow>
+              <MDBRow className="list-group-item d-flex lh-sm">
+                <MDBCol className="ps-4">
+                  <Form.Label className="small">Nº huéspedes</Form.Label>
+                  <Form.Select className="w-50">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </Form.Select>
+                </MDBCol>
+                <MDBCol>
 
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Col xs={10}>
-                <Form.Label className="big justify-content-start">
-                  Total:
-                </Form.Label>
-              </Col>
+                </MDBCol>
+              </MDBRow>
 
-              <Col xs={2}>
-                <Form.Label className="big justify-content-end">25$</Form.Label>
-              </Col>
-            </Row>
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol md='10'>
+                  <Form.Label className="big justify-content-start">
+                    Total:
+                  </Form.Label>
+                </MDBCol>
 
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Button variant="primary" type="submit">
-                {" "}
-                Reservar{" "}
-              </Button>
-            </Row>
+                <MDBCol md='2'>
+                  <Form.Label className="big justify-content-end">25$</Form.Label>
+                </MDBCol>
+              </MDBRow>
 
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <Button variant="primary" type="submit">
+                  Reservar
+                </Button>
+              </MDBRow>
+            </MDBCol>
+          </Form>
             <div className="list-group mb-3 mt-5 d-flex">
-              <Row className="list-group-item d-flex justify-content-between lh-sm">
-                <Col xs={3}>
-                  <h4>Foto anfitrion</h4>
-                </Col>
-
-                <Col xs={9}>
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol md='3'>
+                  <Image roundedCircle={true} src="https://imgur.com/JGmoHaP.jpg"
+                    style={{
+                      height: "50px",
+                      width: "50px"
+                    }}
+                  ></Image>
+                </MDBCol>
+                <MDBCol md='9'>
                   <h4>{household.host.host_username}</h4>
-                </Col>
-              </Row>
+                </MDBCol>
+              </MDBRow>
 
-              <Row className="list-group-item d-flex justify-content-between lh-sm">
-                <Col xs={12}>
-                  <Button variant="primary" type="submit" className="">
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol>
+                {showContact === true ? <p>{household.host.host_email}</p> : <></>}
+                  <Button variant="primary"  className="" onClick={contactButtonHandler}>
                     Contactar
                   </Button>
-                </Col>
-              </Row>
+                </MDBCol>
+              </MDBRow>
             </div>
-          </Form>
-        </Col>
-      </Row>
+        </MDBCol>
+      </MDBRow>
     </Container>
   );
 }
