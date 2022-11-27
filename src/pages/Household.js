@@ -1,4 +1,4 @@
-//import Image from "react-bootstrap/Image";
+import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -85,6 +85,35 @@ export default function Household() {
     return household
   };
   const [household, setHousehold] = useState({
+    id: "",
+    host: {
+      host_username: "",
+      host_email: ""
+    },
+    title: "",
+    description: "",
+    address: {
+      id: "",
+      street: "", "number": "",
+      geojson: {
+        type: "",
+        coordinates: [
+          0, 
+          0
+        ]
+      }
+    }, photo: [""],
+    num_bathroom: 0,
+    num_bed: 0,
+    max_capacity: 0,
+    price_euro_per_night: 0,
+    rating: 0 ,
+    availability: [
+      [{ date: "" },
+      { date: "" }],
+      [{ date: "" },
+      { date: "" }]
+    ] 
     
   });
 
@@ -101,15 +130,20 @@ export default function Household() {
     lng: 2.1734,
   });
 
+  console.log(household);
+
   return (
     <Container>
       <Row>
         <Col xs={8}>
           <h1>{household.title}</h1>
 
-          <Row>
-            <h3>Imagen grande</h3>
-          </Row>
+
+          <Col xs={11}>
+            <Row>
+              <Image src={household.photo} className='image-thumbnail'></Image>
+            </Row>
+          </Col>
 
           <Row>
             <h4>{household.description}</h4>
