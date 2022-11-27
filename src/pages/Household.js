@@ -88,6 +88,7 @@ export default function Household() {
     
   });
 
+  
   useEffect(() => {
     const temp = async () => {
       setHousehold(await getHousehold())
