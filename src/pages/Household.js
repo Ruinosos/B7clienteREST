@@ -77,13 +77,23 @@ function imgur() {
 
 
 export default function Household() {
-  const useGetHousehold = async () => {
-    const params = useParams();
-    console.log(params.id);
-    const household = await getHouseholdByID(params.id);
+  const params = useParams().id;
+  const getHousehold = async () => {
+    console.log(params);
+    const household = await getHouseholdByID(params);
     console.log(household);
+    return household
   };
-  useGetHousehold()
+  const [household, setHousehold] = useState({
+    
+  });
+
+  useEffect(() => {
+    const temp = async () => {
+      setHousehold(await getHousehold())
+    }
+    temp()
+  }, []);
 
   const [position] = useState({
     lat: 41.3851,
@@ -94,14 +104,14 @@ export default function Household() {
     <Container>
       <Row>
         <Col xs={8}>
-          <h1>Titulo casa</h1>
+          <h1>{household.title}</h1>
 
           <Row>
             <h3>Imagen grande</h3>
           </Row>
 
           <Row>
-            <h4>Descripcion</h4>
+            <h4>{household.description}</h4>
           </Row>
 
           <Row>
@@ -149,8 +159,7 @@ export default function Household() {
           <Form className="list-group mb-3 d-flex">
             <Row className="list-group-item d-flex justify-content-between lh-sm">
               <Form.Label className="small my-0">Precio por Noche</Form.Label>
-
-              <Form.Label className=" mt-2">$12</Form.Label>
+              <Form.Label className=" mt-2">${household.price_euro_per_night}</Form.Label>
             </Row>
             <Row className="list-group-item d-flex justify-content-between lh-sm">
               <Col>
@@ -203,7 +212,7 @@ export default function Household() {
                 </Col>
 
                 <Col xs={9}>
-                  <h4>Nombre anfitrion</h4>
+                  <h4>{household.host.host_username}</h4>
                 </Col>
               </Row>
 
