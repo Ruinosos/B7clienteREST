@@ -6,3 +6,9 @@ export const getHouseholdByID = async (id) => {
     console.log(data);
     return data;
 };
+
+export const getHouseholds = async () => {
+    const res = await fetch(`${API_BASE_URL}/households/`);
+    var data = await res.json();
+    return data;
+};

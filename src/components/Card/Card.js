@@ -1,6 +1,7 @@
 import { ButtonGroup, Card, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-export const CardComponent = ({url,text,time}) => {
+export const CardComponent = ({id,url,text,time}) => {
     return (
         <Col>
             <Card>
@@ -9,8 +10,8 @@ export const CardComponent = ({url,text,time}) => {
                     <Card.Text>{text}</Card.Text>
                     <div className="d-flex justify-content-between align-items-center">
                         <ButtonGroup>
-                            <a href='/household'><button type="button" className="btn btn-sm btn-primary">View</button></a>
-                            <a href='/household'><button type="button" className="btn btn-sm btn-success">Edit</button></a>
+                            <Link to={`household/${id}`}><button type="button" className="btn btn-sm btn-primary">View</button></Link>
+                            <Link to={`household/${id}`}><button type="button" className="btn btn-sm btn-success">Edit</button></Link>
                             <button type="button" className="btn btn-sm btn-danger">Delete</button>
                         </ButtonGroup>
                         <div class="text-muted">{time}</div>

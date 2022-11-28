@@ -1,31 +1,45 @@
 import { CardGroup, Container, Row } from "react-bootstrap";
+import { getHouseholds } from "../../../src/api/FetchDBData";
 import CardComponent from "../Card/Card";
-
-var url = "https://i.imgur.com/69Th4Pb.jpg";
-var textBooking =
-  "This is a wider card with supporting text bbookow as a natural lead-in to additional content. This content is a little bit longer.";
-var time = new Date(Date.now()).toLocaleDateString();
-
-const households = [
-  { url: url, textBooking: textBooking, time: time },
-  { url: url, textBooking: textBooking, time: time },
-  { url: url, textBooking: textBooking, time: time },
-  { url: url, textBooking: textBooking, time: time },
-  { url: url, textBooking: textBooking, time: time },
-  { url: url, textBooking: textBooking, time: time },
-];
+import { useEffect, useState } from "react";
 
 export const AlbumComponent = () => {
+  const getHouseholdsMethod = async () => {
+    const households = await getHouseholds();
+    return households
+  };
+    const [households, setHouseholds] = useState([
+      {
+      id: '',
+      title: "",
+      description: "",
+      photo: [""],
+      availability: [
+        [{ date: "" },
+        { date: "" }],
+        [{ date: "" },
+        { date: "" }]
+      ] 
+      
+    }]);
+
+  useEffect(() => {
+    const temp = async () => {
+      setHouseholds(await getHouseholdsMethod())
+    }
+    temp()
+  }, []);
+
   return (
     <CardGroup className="py-5 bg-white">
       <Container>
         <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {" "}
           {households.map((household) => (
-            <CardComponent
-              url={household.url}
-              text={household.textBooking}
-              time={household.time}
+            <CardComponent key={household.id}
+              id={household.id}
+              url={household['photo'][0]}
+              text={household['description']}
+              time={new Date(household['availability'][0][1]['$date']).toLocaleDateString()}
             ></CardComponent>
           ))}
         </Row>
