@@ -13,7 +13,7 @@ import { getHouseholdByID } from "../../src/api/FetchDBData";
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {HouseholdMarkers} from "../components/Map/HouseholdMarker";
-import { Carousel } from "react-bootstrap";
+import { Carousel, ListGroup } from "react-bootstrap";
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -107,14 +107,24 @@ export default function Household() {
           <MDBRow>
             <MDBCol md='11'>
               <MDBRow>
-                <Carousel>
-                  {household.photo.map((photo) => (
-                  <Carousel.Item>
-                    <Image src={photo}></Image>
-                  </Carousel.Item>
-                  ))}
-                 
-                </Carousel>
+                <ListGroup>
+                  <ListGroup.Item>
+                    <Carousel>
+                      {household.photo.map((photo) => (
+                      <Carousel.Item>
+                        <Image src={photo}
+                          style={{
+                            height: "400px",
+                            width: "100%",
+                          }}
+                      ></Image>
+                      </Carousel.Item>
+                      ))}
+                    
+                    </Carousel>
+                  </ListGroup.Item>
+                </ListGroup>
+               
                 
               </MDBRow>
             </MDBCol>
