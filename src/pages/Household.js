@@ -13,6 +13,7 @@ import { getHouseholdByID } from "../../src/api/FetchDBData";
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {HouseholdMarkers} from "../components/Map/HouseholdMarker";
+import { Carousel } from "react-bootstrap";
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -28,54 +29,6 @@ const MyMap = ({ position }) => {
 
   return null;
 };
-
-/*
-function imgur() {
-  const [file, setFile] = useState();
-  const onFileChange = (event) => {
-    // Updating the state
-    setFile({ file: event.target.files[0] });
-  };
-  const onFileUpload = async () => {
-    // Client ID
-    const clientId = "fd2e1e3d3d12ce1",
-      auth = "Client-ID " + clientId;
-  
-    // Creating an object of formData
-    const formData = new FormData();
-  
-    // Adding our image to formData
-    formData.append("file", file);
-  
-    // Making the post request
-    await fetch("https://api.imgur.com/3/image/", {
-      // API Endpoint
-      method: "POST", // HTTP Method
-      body: formData, // Data to be sent
-      headers: {
-        // Setting header
-        Authorization: auth,
-        Accept: "application/json",
-      },
-    })
-      // Handling success
-      .then((res) => alert("image uploaded") && console.log(res)) 
-      .catch((err) => alert("Failed") && console.log(err)); 
-  };
-  
-
-
-  return (
-    <>
-      <input name="file" type="file" onChange={onFileChange} />
-      <button onClick={onFileUpload}>Upload</button>
-    </>
-  );
-}
-*/
- 
-
-
 
 export default function Household() {
   const params = useParams().id;
@@ -118,6 +71,7 @@ export default function Household() {
     
   });
 
+
   const latlngObject = {
     lat: household.address.geojson.coordinates[1],
     lng: household.address.geojson.coordinates[0], 
@@ -143,8 +97,6 @@ export default function Household() {
     lng: 2.1734,
   });
 
-  console.log(household);
-
   return (
     <Container>
       <MDBRow className="mt-5">
@@ -155,7 +107,15 @@ export default function Household() {
           <MDBRow>
             <MDBCol md='11'>
               <MDBRow>
-                <Image src={household.photo} className='image-thumbnail'></Image>
+                <Carousel>
+                  {household.photo.map((photo) => (
+                  <Carousel.Item>
+                    <Image src={photo}></Image>
+                  </Carousel.Item>
+                  ))}
+                 
+                </Carousel>
+                
               </MDBRow>
             </MDBCol>
           </MDBRow>
