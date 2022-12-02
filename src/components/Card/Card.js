@@ -31,7 +31,7 @@ export const CardComponent = ({household}) => {
                     <ButtonGroup>
                             <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-primary">Mostrar</button></Link>
                             
-                            <Link to={`household/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
+                            <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
                             
                         </ButtonGroup>
                 </Card.Body>
