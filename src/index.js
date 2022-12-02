@@ -17,7 +17,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/household/:id" element={<Household />} />
         <Route path="/map" element={<Map />} />
-        <Route path="/myhouseholds" element={<MyHouseholds />} />
+        <Route path="/myhouseholds/:username" element={<MyHouseholds />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
