@@ -11,3 +11,10 @@ export const getHouseholds = async () => {
     var data = await res.json();
     return data;
 };
+
+export const getHouseholdsFromUser = async (username) => {
+    const res = await fetch(`${API_BASE_URL}/households/filter/username?name=${username}`); 
+    const data = await res.json();
+    console.log(data);
+    return data;
+  };

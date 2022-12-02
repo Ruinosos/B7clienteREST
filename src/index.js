@@ -19,7 +19,7 @@ root.render(
         <Route path="/household/:id" element={<Household />} />
         <Route path="/createHousehold" element={<CreateHousehold />} />
         <Route path="/map" element={<Map />} />
-        <Route path="/myhouseholds" element={<MyHouseholds />} />
+        <Route path="/myhouseholds/:username" element={<MyHouseholds />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

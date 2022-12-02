@@ -6,6 +6,6 @@ export default function Home() {
   return <div>
         <NavbarComponent/>
         <h1 className="d-flex justify-content-center"> Anuncios </h1>
-        <AlbumComponent/>
+        <AlbumComponent username=''/>
         </div>;
 }
