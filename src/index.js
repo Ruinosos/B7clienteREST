@@ -4,6 +4,7 @@ import "./index.css";
 import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Household from "./pages/Household";
+import MyHouseholds from "./pages/MyHouseholds";
 import { Map } from "./pages/Map";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -16,6 +17,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/household/:id" element={<Household />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/myhouseholds" element={<MyHouseholds />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
