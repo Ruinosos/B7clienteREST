@@ -111,7 +111,7 @@ export default function Household() {
                     <ListGroup.Item>
                       <Carousel>
                         {household.photo.map((photo) => (
-                        <Carousel.Item>
+                        <Carousel.Item key={photo}>
                           <Image src={photo}
                             style={{
                               height: "400px",
