@@ -22,10 +22,8 @@ import { NavbarComponent } from "../components/Navbar/Navbar";
 
 const MyMap = ({ position }) => {
   const map = useMap();
-  console.log(map);
   useEffect(() => {
     //Center map on position
-    console.log("map center:", map.getCenter());
     map.flyTo([position.lat, position.lng]);
   }, [position, map]);
 
@@ -35,9 +33,7 @@ const MyMap = ({ position }) => {
 export default function Household() {
   const params = useParams().id;
   const getHousehold = async () => {
-    console.log(params);
     const household = await getHouseholdByID(params);
-    console.log(household);
     return household
   };
   const [household, setHousehold] = useState({
