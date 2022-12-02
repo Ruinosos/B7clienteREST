@@ -2,7 +2,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { getCoords, getNearbyBusStopsbyLatLon, getNearbyBusesbyLatLon } from "../../api/FetchOpenData";
+import {
+  getCoords,
+  getNearbyBusStopsbyLatLon,
+  getNearbyBusesbyLatLon,
+} from "../../api/FetchOpenData";
 import { getHouseholdNearbyByCoords } from "../../api/FetchHouseholdData";
 import { useState } from "react";
 import { useInterval } from "../../hooks/useInterval";
@@ -67,7 +71,6 @@ export const MapForm = ({
 
       const busData = await getNearbyBusesbyLatLon(lat, lon);
       setBusMarkers(busData.datos);
-
     } catch (error) {
       setModalData((prev) => {
         return { ...prev, heading: "Error", body: error, show: true };
@@ -75,17 +78,12 @@ export const MapForm = ({
     } finally {
       setIsLoading(false);
     }
-
-      
   };
 
   // Fetch bus live data every 10s
   const REFRESH_RATE_MS = 10000;
 
-  useInterval(async () => {
-    
-    
-  }, REFRESH_RATE_MS);
+  useInterval(async () => {}, REFRESH_RATE_MS);
 
   const updateFormData = (event) => {
     const { name, value } = event.target;

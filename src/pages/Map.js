@@ -42,7 +42,7 @@ export const Map = () => {
             className="rounded-5 order-lg-last ms-5"
             style={{
               height: "600px",
-              width: "800px",
+              width: "100%",
             }}
             center={position}
             zoom={13}
@@ -53,7 +53,6 @@ export const Map = () => {
             <MyMap position={position} />
 
             <LayersControl position="topright">
-
               <LayersControl.Overlay checked name="Household Marker">
                 <LayerGroup>
                   {householdMarkers && (
@@ -72,12 +71,9 @@ export const Map = () => {
 
               <LayersControl.Overlay name="Buses Marker">
                 <LayerGroup>
-                  {busMarkers && (
-                    <BusMarkers requestData={busMarkers} />
-                  )}
+                  {busMarkers && <BusMarkers requestData={busMarkers} />}
                 </LayerGroup>
               </LayersControl.Overlay>
-
             </LayersControl>
 
             <TileLayer
