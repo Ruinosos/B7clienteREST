@@ -9,6 +9,8 @@ export const NavbarComponent = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Nav>
                     <Nav.Link href="/createHousehold">Crear Anuncio</Nav.Link>
+                    <Nav.Link href="/myhouseholds">Mis anuncios</Nav.Link>
+                    <Nav.Link href="/bookings">Mis reservas</Nav.Link>
                     <Nav.Link href="/map">Buscar Ubicación</Nav.Link>
                     <NavDropdown title="Perfil" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Ver Perfil</NavDropdown.Item>
