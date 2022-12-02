@@ -1,20 +1,38 @@
-import { ButtonGroup, Card, Col } from 'react-bootstrap';
+import { ButtonGroup, Card, Col, Carousel,Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export const CardComponent = ({id,url,text,time}) => {
+export const CardComponent = ({household}) => {
+    const startDate= new Date(household['availability'][0][0]['$date']).toLocaleDateString()
+    const endDate = new Date(household['availability'][0][1]['$date']).toLocaleDateString()
     return (
         <Col>
             <Card>
-                <img src={url} alt="Imagen de vivienda" fill="currentColor" viewBox="0 0 16 16"/>
+            <Carousel>
+                        {household.photo.map((photo) => (
+                        <Carousel.Item key={photo}>
+                          <Image src={photo}
+                            style={{
+                              height: "300px"
+                            }}
+                        ></Image>
+                        </Carousel.Item>
+                        ))}
+                      
+                      </Carousel>
                 <Card.Body>
-                    <Card.Text>{text}</Card.Text>
+                    <Card.Title>{household.title}</Card.Title>
+                    <Card.Text className='p-2 mb-4'>{household.description}</Card.Text>
+
                     <div className="d-flex justify-content-between align-items-center">
                         <ButtonGroup>
-                            <Link to={`household/${id}`}><button type="button" className="btn btn-sm btn-primary">View</button></Link>
+                            <Link to={`household/${household.id}`}><button type="button" className="btn btn-md btn-primary">Mostrar</button></Link>
+                            {/* 
                             <Link to={`household/${id}`}><button type="button" className="btn btn-sm btn-success">Edit</button></Link>
                             <button type="button" className="btn btn-sm btn-danger">Delete</button>
+                            */}
                         </ButtonGroup>
-                        <div class="text-muted">{time}</div>
+                        <Card.Text className='my-auto'>{household.price_euro_per_night + ' € / noche'}</Card.Text>
+                        <Card.Text className='my-auto'>{startDate + ' - ' + endDate}</Card.Text>
                     </div>
                 </Card.Body>
             </Card>
