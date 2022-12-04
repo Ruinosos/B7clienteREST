@@ -13,4 +13,4 @@ const getHouseholdNearbyByCoords = async (
   return res.json();
 };
 
-export { getHouseholdNearbyByCoords };
+export { getHouseholdNearbyByCoords};
