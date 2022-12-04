@@ -11,7 +11,7 @@ export const NavbarComponent = () => {
                 <Nav>
                     <Nav.Link href="/createHousehold">Crear Anuncio</Nav.Link>
                     <Nav.Link href={`/myhouseholds/${username}`}>Mis anuncios</Nav.Link>
-                    <Nav.Link href="/bookings">Mis reservas</Nav.Link>
+                    <Nav.Link href="/MyBookings">Mis reservas</Nav.Link>
                     <Nav.Link href="/map">Buscar Ubicación</Nav.Link>
                     <NavDropdown title="Perfil" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Ver Perfil</NavDropdown.Item>
