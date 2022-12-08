@@ -9,7 +9,6 @@ import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { BusStopMarkers } from "../components/Map/BusStopMarkers";
 import { BusMarkers } from "../components/Map/BusMarkers";
 import "leaflet/dist/leaflet.css";
-import { NavbarComponent } from "../components/Navbar/Navbar";
 import { LayersControl, LayerGroup } from "react-leaflet";
 
 const MyMap = ({ position }) => {
@@ -35,7 +34,6 @@ export const Map = () => {
 
   return (
     <>
-      <NavbarComponent />
       <Container className="min-vw-100">
         <div className="min-vh-50 d-flex p-5 flex-column flex-lg-row m-5 align-items-center justify-content-evenly gap-5 ">
           <MapContainer
