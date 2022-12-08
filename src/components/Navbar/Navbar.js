@@ -1,6 +1,7 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 
 export const NavbarComponent = ({ auth: Auth }) => {
+  const username = "NicoRomero";
   return (
     <Navbar bg="light">
       <Container className="d-flex justify-content-start align-items-center mx-1">
@@ -17,14 +18,15 @@ export const NavbarComponent = ({ auth: Auth }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav>
           <Nav.Link href="/createHousehold">Crear Anuncio</Nav.Link>
+          <Nav.Link href={`/myhouseholds/${username}`}>Mis anuncios</Nav.Link>
+          <Nav.Link href="/MyBookings">Mis reservas</Nav.Link>
           <Nav.Link href="/map">Buscar Ubicación</Nav.Link>
         </Nav>
       </Container>
-      <div className="ms-auto">
+      <div className="ms-auto me-5">
         <Auth />
       </div>
     </Navbar>
   );
 };
-
 export default NavbarComponent;

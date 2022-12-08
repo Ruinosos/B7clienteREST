@@ -33,7 +33,7 @@ export const Wrapper = () => {
     };
 
     return profile ? (
-      <Row className="align-items-center ms-auto me-4">
+      <Row className="align-items-center">
         <Col>
           <Link to={"/profile"}>
             <Image
