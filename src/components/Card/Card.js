@@ -1,9 +1,17 @@
 import { ButtonGroup, Card, Col, Carousel,Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export const CardComponent = ({household}) => {
+export const CardComponent = ({household,username}) => {
     const startDate= new Date(household['availability'][0][0]['$date']).toLocaleDateString()
     const endDate = new Date(household['availability'][0][1]['$date']).toLocaleDateString()
+
+    function Editar(){
+        if(username !== ''){
+            return <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
+        }
+        return null;
+    }
+
     return (
         <Col>
             <Card>
@@ -30,8 +38,7 @@ export const CardComponent = ({household}) => {
                     </div>
                     <ButtonGroup>
                             <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-primary">Mostrar</button></Link>
-                            
-                            <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
+                            {Editar()}
                             
                         </ButtonGroup>
                 </Card.Body>

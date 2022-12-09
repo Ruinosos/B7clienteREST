@@ -6,14 +6,15 @@ import { MDBRow } from "mdb-react-ui-kit";
 import { MDBCol } from "mdb-react-ui-kit";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { useEffect, useState } from "react";
-import {  useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { getHouseholdByID } from "../../src/api/FetchDBData";
 import React from 'react';
-import {useParams} from 'react-router-dom';
-import {HouseholdMarkers} from "../components/Map/HouseholdMarker";
+import { useParams, useLocation,Link } from 'react-router-dom';
+import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { Carousel, ListGroup } from "react-bootstrap";
 import { NavbarComponent } from "../components/Navbar/Navbar";
+
 
 
 //Esto es pa crear una linea divisora
@@ -29,9 +30,18 @@ const MyMap = ({ position }) => {
   return null;
 };
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+
 export default function Household() {
+
   const params = useParams().id;
-  const getHousehold = async () => {
+
+  const getHousehold = async (params) => {
     const household = await getHouseholdByID(params);
     return household
   };
@@ -49,7 +59,7 @@ export default function Household() {
       geojson: {
         type: "",
         coordinates: [
-          0, 
+          0,
           0
         ]
       }
@@ -58,41 +68,44 @@ export default function Household() {
     num_bed: 0,
     max_capacity: 0,
     price_euro_per_night: 0,
-    rating: 0 ,
+    rating: 0,
     availability: [
       [{ date: "" },
       { date: "" }],
       [{ date: "" },
       { date: "" }]
-    ] 
-    
+    ]
+
   });
 
 
   const latlngObject = {
     lat: household.address.geojson.coordinates[1],
-    lng: household.address.geojson.coordinates[0], 
+    lng: household.address.geojson.coordinates[0],
   }
 
   const [showContact, setShowContact] = useState({
     show: false,
   });
-  
+
   const contactButtonHandler = () => {
     setShowContact(prev => !prev)
   }
 
   useEffect(() => {
     const temp = async () => {
-      setHousehold(await getHousehold())
+      setHousehold(await getHousehold(params))
     }
     temp()
-  }, []);
+  }, [params]);
 
-  const [position] = useState({
-    lat: 41.3851,
-    lng: 2.1734,
-  });
+  let query = useQuery();
+  let personas = query.get("personas");
+  if (personas > household.max_capacity){
+    personas = household.max_capacity;
+  }
+  let price_total = household.price_euro_per_night * personas;
+  //let personas = '2';
 
   return (
     <>
@@ -110,21 +123,21 @@ export default function Household() {
                     <ListGroup.Item>
                       <Carousel>
                         {household.photo.map((photo) => (
-                        <Carousel.Item key={photo}>
-                          <Image src={photo}
-                            style={{
-                              height: "400px",
-                              width: "100%",
-                            }}
-                        ></Image>
-                        </Carousel.Item>
+                          <Carousel.Item key={photo}>
+                            <Image src={photo}
+                              style={{
+                                height: "400px",
+                                width: "100%",
+                              }}
+                            ></Image>
+                          </Carousel.Item>
                         ))}
-                      
+
                       </Carousel>
                     </ListGroup.Item>
                   </ListGroup>
-                
-                  
+
+
                 </MDBRow>
               </MDBCol>
             </MDBRow>
@@ -162,7 +175,7 @@ export default function Household() {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
-                  <HouseholdMarkers requestData={[household]}/>
+                  <HouseholdMarkers requestData={[household]} />
                 </MapContainer>
               </MDBCol>
             </MDBRow>
@@ -172,8 +185,7 @@ export default function Household() {
             <Form className="list-group mb-3 d-flex">
               <MDBCol>
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <Form.Label className="small my-0">Precio por Noche</Form.Label>
-                  <Form.Label className=" mt-2">${household.price_euro_per_night}</Form.Label>
+                  <Form.Label className="small my-0">Precio por Noche {household.price_euro_per_night + ' €'}</Form.Label>
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
                   <MDBCol md='6'>
@@ -190,64 +202,56 @@ export default function Household() {
                   </MDBCol>
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex lh-sm">
-                  <MDBCol className="ps-4">
-                    <Form.Label className="small">Nº huéspedes</Form.Label>
-                    <Form.Select className="w-50">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </Form.Select>
-                  </MDBCol>
-                  <MDBCol>
-
-                  </MDBCol>
-                </MDBRow>
-
-                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <MDBCol md='10'>
-                    <Form.Label className="big justify-content-start">
-                      Total:
+                  <MDBCol className="d-flex justify-content-start space-around">
+                    <Form.Label className="my-auto">Personas :
+                      <input type="number" min="0" max={household.max_capacity} className="mx-2" id="personasInput" name="personas" />
                     </Form.Label>
-                  </MDBCol>
-
-                  <MDBCol md='2'>
-                    <Form.Label className="big justify-content-end">25$</Form.Label>
-                  </MDBCol>
-                </MDBRow>
-
-                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <Button variant="primary" type="submit">
-                    Reservar
-                  </Button>
-                </MDBRow>
-              </MDBCol>
-            </Form>
-              <div className="list-group mb-3 mt-5 d-flex">
-                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <MDBCol md='3'>
-                    <Image roundedCircle={true} src="https://imgur.com/JGmoHaP.jpg"
-                      style={{
-                        height: "50px",
-                        width: "50px"
-                      }}
-                    ></Image>
-                  </MDBCol>
-                  <MDBCol md='9'>
-                    <h4>{household.host.host_username}</h4>
-                  </MDBCol>
-                </MDBRow>
-
-                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <MDBCol>
-                  {showContact === true ? <p>{household.host.host_email}</p> : <></>}
-                    <Button variant="primary"  className="" onClick={contactButtonHandler}>
-                      Contactar
+                    <Button variant="primary" type="submit" size='md' className="mx-2 my-auto">
+                      Calcular
                     </Button>
                   </MDBCol>
                 </MDBRow>
-              </div>
+
+                <MDBRow className="list-group-item d-flex lh-sm">
+                  <MDBCol md="d-flex justify-content-start space-around">
+                    <Form.Label className="my-auto">
+                      Precio Total:
+                    </Form.Label>
+                    <Form.Label className="big justify-content-start mx-4">{price_total + ' €'}</Form.Label>
+                  </MDBCol>
+                </MDBRow>
+
+                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                  <Link to={`/paypalGateway/${price_total}`}><Button variant="success" value="Submit">
+                    Reservar
+                  </Button></Link>
+                </MDBRow>
+              </MDBCol>
+            </Form>
+            <div className="list-group mb-3 mt-5 d-flex">
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol md='3'>
+                  <Image roundedCircle={true} src="https://imgur.com/JGmoHaP.jpg"
+                    style={{
+                      height: "50px",
+                      width: "50px"
+                    }}
+                  ></Image>
+                </MDBCol>
+                <MDBCol md='9'>
+                  <h4>{household.host.host_username}</h4>
+                </MDBCol>
+              </MDBRow>
+
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol>
+                  {showContact === true ? <p>{household.host.host_email}</p> : <></>}
+                  <Button variant="primary" className="" onClick={contactButtonHandler}>
+                    Contactar
+                  </Button>
+                </MDBCol>
+              </MDBRow>
+            </div>
           </MDBCol>
         </MDBRow>
       </Container>

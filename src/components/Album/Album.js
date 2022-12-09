@@ -4,18 +4,17 @@ import CardComponent from "../Card/Card";
 import { useEffect, useState } from "react";
 
 export const AlbumComponent = ({username}) => {
-  if(username == ''){
-    var getHouseholdsMethod = async () => {
-      var households = await getHouseholds();
+
+    const getHouseholdsMethod = async (username) => {
+      var households = '';
+      if (username === ''){
+        households = await getHouseholds();
+      }else{
+        households = await getHouseholdsFromUser(username);
+      }
       return households
     };
-  }else{
-    var getHouseholdsFromUserMethod = async () => {
-      var households = await getHouseholdsFromUser(username);
-      console.log(households);
-      return households
-    };
-  }
+    
     const [households, setHouseholds] = useState([
       {
       id: '',
@@ -32,14 +31,10 @@ export const AlbumComponent = ({username}) => {
 
     useEffect(() => {
       const temp = async () => {
-        setHouseholds(await getHouseholdsMethod())
-      }
-      const temp2 = async () => {
-        setHouseholds(await getHouseholdsFromUserMethod())
+        setHouseholds(await getHouseholdsMethod(username))
       }
       temp()
-      temp2()
-    }, []);
+    }, [username]);
 
   return (
     <CardGroup className="py-5 bg-white">
@@ -47,7 +42,8 @@ export const AlbumComponent = ({username}) => {
         <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {households.map((household) => (
             <CardComponent key={household.id}
-              household={household}
+              household={household} 
+              username={username}
             ></CardComponent>
           ))}
         </Row>

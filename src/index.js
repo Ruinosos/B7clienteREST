@@ -8,6 +8,7 @@ import CreateHousehold from "./pages/CreateHousehold";
 import MyHouseholds from "./pages/MyHouseholds";
 import { Map } from "./pages/Map";
 import "bootstrap/dist/css/bootstrap.min.css";
+import PaypalGateway from "./pages/PaypalGateway";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -20,6 +21,7 @@ root.render(
         <Route path="/createHousehold" element={<CreateHousehold />} />
         <Route path="/map" element={<Map />} />
         <Route path="/myhouseholds/:username" element={<MyHouseholds />} />
+        <Route path="/paypalGateway/:price" element={<PaypalGateway />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
