@@ -1,4 +1,6 @@
-const BASE_URL = "http://localhost:8001";
+const host = "3.127.55.81";
+const port = "8001";
+const BASE_URL = `http://${host}:${port}`;
 
 const getHouseholdNearbyByCoords = async (
   lat,

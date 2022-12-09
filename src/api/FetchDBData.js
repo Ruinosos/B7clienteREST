@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:8001";
+const host = "3.127.55.81";
+const port = "8001";
+const API_BASE_URL = `http://${host}:${port}`;
 
 export const getHouseholdByID = async (id) => {
     const res = await fetch(`${API_BASE_URL}/households/${id}`);
