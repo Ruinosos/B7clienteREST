@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { getHouseholdByID } from "../../src/api/FetchDBData";
-import React from "react";
-import {  useParams , useLocation,Link } from "react-router-dom";
-import {  HouseholdMarkers  } from "../components/Map/HouseholdMarker";
+import React from 'react';
+import { useParams, useLocation,Link } from 'react-router-dom';
+import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { Carousel, ListGroup } from "react-bootstrap";
 
 //Esto es pa crear una linea divisora
@@ -86,10 +86,10 @@ export default function Household() {
 
   useEffect(() => {
     const temp = async () => {
-      setHousehold(await getHousehold());
-    };
-    temp();
-  }, []);
+      setHousehold(await getHousehold(params))
+    }
+    temp()
+  }, [params]);
 
   let query = useQuery();
   let personas = query.get("personas");
@@ -97,6 +97,7 @@ export default function Household() {
     personas = household.max_capacity;
   }
   let price_total = household.price_euro_per_night * personas;
+  //let personas = '2';
 
   return (
     <>
@@ -123,12 +124,9 @@ export default function Household() {
                             ></Image>
                           </Carousel.Item>
                         ))}
-
                       </Carousel>
                     </ListGroup.Item>
                   </ListGroup>
-
-
                 </MDBRow>
               </MDBCol>
             </MDBRow>

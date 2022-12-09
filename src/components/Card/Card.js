@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const CardComponent = ({household,username}) => {
     const startDate= new Date(household['availability'][0][0]['$date']).toLocaleDateString()
     const endDate = new Date(household['availability'][0][1]['$date']).toLocaleDateString()
-
+    
     function Editar(){
         if(username !== ''){
             return <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
