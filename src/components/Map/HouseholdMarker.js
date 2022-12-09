@@ -11,17 +11,24 @@ const createHouseholdPopup = (data) => {
   const { title, price_euro_per_night, rating, photo, address } = data;
   return (
     <Popup>
-      <Image src={photo} alt="household"
+      <Image
+        src={photo}
+        alt="household"
         style={{
           height: "50px",
-          width: "100px"
+          width: "100px",
         }}
       />
-      <p>{title}</p>
-      <p>{price_euro_per_night} €/noche </p>
-      <p>Valoración: {rating}</p>
-      <button onClick={() => showRouteTo(address)}>Cómo llegar?</button><br/>
-      <Link className="mt-2 d-inline-block" to="/household">Ver detalles</Link>
+      <h5>{title}</h5>
+      <h5>{price_euro_per_night} €/noche </h5>
+      <h5>Valoración: {rating}</h5>
+      <button onClick={() => showRouteTo(address)}>
+        <h6>Cómo llegar?</h6>
+      </button>
+      <br />
+      <Link className="mt-2 d-inline-block" to="/household">
+        <h6>Ver detalles</h6>
+      </Link>
     </Popup>
   );
 };
@@ -29,7 +36,7 @@ const createHouseholdPopup = (data) => {
 export const HouseholdMarkers = ({ requestData }) => {
   return (
     <>
-      {requestData.map((household,idx) => {
+      {requestData.map((household, idx) => {
         return (
           <Marker
             position={[

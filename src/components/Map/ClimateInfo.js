@@ -63,7 +63,7 @@ export const ClimateInfo = ({ position }) => {
 
   return (
     <MDBContainer className={`mb-3 ${position}`}>
-      <MDBRow className="h-25">
+      <MDBRow>
         <MDBCol lg="2">
           <MDBCard
             className="d-flex justify-content-center align-items-center"
@@ -80,7 +80,7 @@ export const ClimateInfo = ({ position }) => {
                   <MDBTypography tag="h6">{currentTime}</MDBTypography>
                 </div>
 
-                <div className="d-flex flex-column text-center mt-2 mb-2">
+                <div className="d-flex flex-column text-center mt-2 mb-2 ">
                   <MDBTypography
                     tag="h6"
                     className="display-4 mb-0 font-weight-bold"

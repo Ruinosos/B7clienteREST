@@ -9,13 +9,10 @@ import { useEffect, useState } from "react";
 import { useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { getHouseholdByID } from "../../src/api/FetchDBData";
-import React from 'react';
-import { useParams, useLocation,Link } from 'react-router-dom';
-import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
+import React from "react";
+import {  useParams , useLocation,Link } from "react-router-dom";
+import {  HouseholdMarkers  } from "../components/Map/HouseholdMarker";
 import { Carousel, ListGroup } from "react-bootstrap";
-import { NavbarComponent } from "../components/Navbar/Navbar";
-
-
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -43,61 +40,56 @@ export default function Household() {
 
   const getHousehold = async (params) => {
     const household = await getHouseholdByID(params);
-    return household
+    return household;
   };
   const [household, setHousehold] = useState({
     id: "",
     host: {
       host_username: "",
-      host_email: ""
+      host_email: "",
     },
     title: "",
     description: "",
     address: {
       id: "",
-      street: "", "number": "",
+      street: "",
+      number: "",
       geojson: {
         type: "",
-        coordinates: [
-          0,
-          0
-        ]
-      }
-    }, photo: [""],
+        coordinates: [0, 0],
+      },
+    },
+    photo: [""],
     num_bathroom: 0,
     num_bed: 0,
     max_capacity: 0,
     price_euro_per_night: 0,
     rating: 0,
     availability: [
-      [{ date: "" },
-      { date: "" }],
-      [{ date: "" },
-      { date: "" }]
-    ]
-
+      [{ date: "" }, { date: "" }],
+      [{ date: "" }, { date: "" }],
+    ],
   });
-
 
   const latlngObject = {
     lat: household.address.geojson.coordinates[1],
     lng: household.address.geojson.coordinates[0],
-  }
+  };
 
   const [showContact, setShowContact] = useState({
     show: false,
   });
 
   const contactButtonHandler = () => {
-    setShowContact(prev => !prev)
-  }
+    setShowContact(prev => !prev);
+  };
 
   useEffect(() => {
     const temp = async () => {
-      setHousehold(await getHousehold(params))
-    }
-    temp()
-  }, [params]);
+      setHousehold(await getHousehold());
+    };
+    temp();
+  }, []);
 
   let query = useQuery();
   let personas = query.get("personas");
@@ -105,26 +97,25 @@ export default function Household() {
     personas = household.max_capacity;
   }
   let price_total = household.price_euro_per_night * personas;
-  //let personas = '2';
 
   return (
     <>
-      <NavbarComponent />
       <Container>
         <MDBRow className="mt-5">
           <h1>{household.title}</h1>
         </MDBRow>
         <MDBRow>
-          <MDBCol md='8'>
+          <MDBCol md="8">
             <MDBRow>
-              <MDBCol md='11'>
+              <MDBCol md="11">
                 <MDBRow>
                   <ListGroup>
                     <ListGroup.Item>
                       <Carousel>
-                        {household.photo.map((photo) => (
+                        {household.photo.map(photo => (
                           <Carousel.Item key={photo}>
-                            <Image src={photo}
+                            <Image
+                              src={photo}
                               style={{
                                 height: "400px",
                                 width: "100%",
@@ -149,17 +140,20 @@ export default function Household() {
             <MDBRow>
               <h4>Comentarios</h4>
 
-              <MDBCol md='6'>
+              <MDBCol md="6">
                 <h5>Comentario 1</h5>
               </MDBCol>
 
-              <MDBCol md='6'>
+              <MDBCol md="6">
                 <h5>Comentario 2</h5>
               </MDBCol>
             </MDBRow>
 
             <MDBRow className="mb-5">
-              <MDBCol className="min-vh-50 d-flex flex-column flex-lg-row" md='11'>
+              <MDBCol
+                className="min-vh-50 d-flex flex-column flex-lg-row"
+                md="11"
+              >
                 <MapContainer
                   className="rounded-5 order-lg-last"
                   style={{
@@ -181,20 +175,20 @@ export default function Household() {
             </MDBRow>
           </MDBCol>
 
-          <MDBCol md='4' className="mt-5 align-items-center">
+          <MDBCol md="4" className="mt-5 align-items-center">
             <Form className="list-group mb-3 d-flex">
               <MDBCol>
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
                   <Form.Label className="small my-0">Precio por Noche {household.price_euro_per_night + ' €'}</Form.Label>
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <MDBCol md='6'>
+                  <MDBCol md="6">
                     <Form.Group className="mw-25" controlId="startDate">
                       <Form.Label className="small">Fecha Inicio</Form.Label>
                       <Form.Control type="date" placeholder="inicio" />
                     </Form.Group>
                   </MDBCol>
-                  <MDBCol md='6'>
+                  <MDBCol md="6">
                     <Form.Group className="mw-25" controlId="endDate">
                       <Form.Label className="small">Fecha Fin</Form.Label>
                       <Form.Control type="date" placeholder="final" />
