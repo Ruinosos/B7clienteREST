@@ -4,10 +4,11 @@ import {
     PayPalButtons,
     usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 // This values are the props in the UI
-const currency = "USD";
+
+const currency = "EUR";
 const style = {"layout":"vertical"};
 
 // Custom component to wrap the PayPalButtons and handle currency changes
@@ -17,16 +18,17 @@ const ButtonWrapper = ({ currency, showSpinner }) => {
 
     // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
     // This is the main reason to wrap the PayPalButtons in a new component
-    const [{ isPending }, dispatch] = usePayPalScriptReducer();
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
     useEffect(() => {
         dispatch({
             type: "resetOptions",
             value: {
+                ...options,
                 currency: currency,
             },
         });
-    }, [currency, showSpinner, dispatch]);
+    }, [currency, showSpinner,dispatch]);
 
 
     return (<>
@@ -65,7 +67,7 @@ const ButtonWrapper = ({ currency, showSpinner }) => {
 
 export default function App() {
 	return (
-		<div style={{ maxWidth: "750px", minHeight: "200px" }}>
+		<div style={{ maxWidth: "750px", minHeight: "200px" }} className='d-flex justify-content-center align-items-center mx-auto'>
             <PayPalScriptProvider
                 options={{
                     "client-id": "test",

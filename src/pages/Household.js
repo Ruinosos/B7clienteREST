@@ -196,7 +196,7 @@ export default function Household() {
                 <MDBRow className="list-group-item d-flex lh-sm">
                   <MDBCol className="d-flex justify-content-start space-around">
                     <Form.Label className="my-auto">Personas :
-                      <input type="number" min="0" max={household.max_capacity} className="mx-2" id="personasInput" name="personas" />
+                      <input type="number" min="2" max={household.max_capacity} className="mx-2" id="personasInput" name="personas" />
                     </Form.Label>
                     <Button variant="primary" type="submit" size='md' className="mx-2 my-auto">
                       Calcular
@@ -214,9 +214,9 @@ export default function Household() {
                 </MDBRow>
 
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <Link to={`/paypalGateway/${price_total}`}><Button variant="success" value="Submit">
+                  <Button variant="success" type="Submit" >
                     Reservar
-                  </Button></Link>
+                  </Button>
                 </MDBRow>
               </MDBCol>
             </Form>
