@@ -6,7 +6,6 @@ import { Container, ListGroup } from "react-bootstrap";
 export function MyBookings() {
     return(
         <>
-            <NavbarComponent />
             <Container>
                 <MDBRow>
                     <h1> Tus reservas </h1>

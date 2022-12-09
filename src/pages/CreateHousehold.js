@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 export default function CreateHousehold() {
     return (
         <>
-            <NavbarComponent />
             <Container>
                 <MDBRow>
                     <Form className="list-group mb-3 d-flex">
