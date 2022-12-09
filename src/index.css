@@ -15,3 +15,10 @@ code {
 .border-radius-2 div {
   border-radius: 10px !important;
 }
+.leaflet-popup {
+  bottom: 25px !important;
+}
+
+.leaflet-control-layers-list {
+  font-size: calc(0.05rem + 16px);
+}

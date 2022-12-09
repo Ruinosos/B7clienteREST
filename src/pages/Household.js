@@ -1,223 +1,252 @@
-//import Image from "react-bootstrap/Image";
+import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { MDBRow } from "mdb-react-ui-kit";
+import { MDBCol } from "mdb-react-ui-kit";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { useEffect, useState } from "react";
-import { iconDefault } from "../components/Map/markerLeafLet";
-import { Marker, Popup, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { getHouseholdByID } from "../../src/api/FetchDBData";
 import React from 'react';
-import {useParams} from 'react-router-dom';
+import { useParams, useLocation,Link } from 'react-router-dom';
+import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
+import { Carousel, ListGroup } from "react-bootstrap";
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
 
 const MyMap = ({ position }) => {
   const map = useMap();
-  console.log(map);
   useEffect(() => {
     //Center map on position
-    console.log("map center:", map.getCenter());
     map.flyTo([position.lat, position.lng]);
   }, [position, map]);
 
   return null;
 };
 
-/*
-function imgur() {
-  const [file, setFile] = useState();
-  const onFileChange = (event) => {
-    // Updating the state
-    setFile({ file: event.target.files[0] });
-  };
-  const onFileUpload = async () => {
-    // Client ID
-    const clientId = "fd2e1e3d3d12ce1",
-      auth = "Client-ID " + clientId;
-  
-    // Creating an object of formData
-    const formData = new FormData();
-  
-    // Adding our image to formData
-    formData.append("file", file);
-  
-    // Making the post request
-    await fetch("https://api.imgur.com/3/image/", {
-      // API Endpoint
-      method: "POST", // HTTP Method
-      body: formData, // Data to be sent
-      headers: {
-        // Setting header
-        Authorization: auth,
-        Accept: "application/json",
-      },
-    })
-      // Handling success
-      .then((res) => alert("image uploaded") && console.log(res)) 
-      .catch((err) => alert("Failed") && console.log(err)); 
-  };
-  
+function useQuery() {
+  const { search } = useLocation();
 
-
-  return (
-    <>
-      <input name="file" type="file" onChange={onFileChange} />
-      <button onClick={onFileUpload}>Upload</button>
-    </>
-  );
+  return React.useMemo(() => new URLSearchParams(search), [search]);
 }
-*/
- 
-
 
 
 export default function Household() {
-  const useGetHousehold = async () => {
-    const params = useParams();
-    console.log(params.id);
-    const household = await getHouseholdByID(params.id);
-    console.log(household);
-  };
-  useGetHousehold()
 
-  const [position] = useState({
-    lat: 41.3851,
-    lng: 2.1734,
+  const params = useParams().id;
+
+  const getHousehold = async (params) => {
+    const household = await getHouseholdByID(params);
+    return household;
+  };
+  const [household, setHousehold] = useState({
+    id: "",
+    host: {
+      host_username: "",
+      host_email: "",
+    },
+    title: "",
+    description: "",
+    address: {
+      id: "",
+      street: "",
+      number: "",
+      geojson: {
+        type: "",
+        coordinates: [0, 0],
+      },
+    },
+    photo: [""],
+    num_bathroom: 0,
+    num_bed: 0,
+    max_capacity: 0,
+    price_euro_per_night: 0,
+    rating: 0,
+    availability: [
+      [{ date: "" }, { date: "" }],
+      [{ date: "" }, { date: "" }],
+    ],
   });
 
+  const latlngObject = {
+    lat: household.address.geojson.coordinates[1],
+    lng: household.address.geojson.coordinates[0],
+  };
+
+  const [showContact, setShowContact] = useState({
+    show: false,
+  });
+
+  const contactButtonHandler = () => {
+    setShowContact(prev => !prev);
+  };
+
+  useEffect(() => {
+    const temp = async () => {
+      setHousehold(await getHousehold(params))
+    }
+    temp()
+  }, [params]);
+
+  let query = useQuery();
+  let personas = query.get("personas");
+  if (personas > household.max_capacity){
+    personas = household.max_capacity;
+  }
+  let price_total = household.price_euro_per_night * personas;
+  //let personas = '2';
+
   return (
-    <Container>
-      <Row>
-        <Col xs={8}>
-          <h1>Titulo casa</h1>
+    <>
+      <Container>
+        <MDBRow className="mt-5">
+          <h1>{household.title}</h1>
+        </MDBRow>
+        <MDBRow>
+          <MDBCol md="8">
+            <MDBRow>
+              <MDBCol md="11">
+                <MDBRow>
+                  <ListGroup>
+                    <ListGroup.Item>
+                      <Carousel>
+                        {household.photo.map(photo => (
+                          <Carousel.Item key={photo}>
+                            <Image
+                              src={photo}
+                              style={{
+                                height: "400px",
+                                width: "100%",
+                              }}
+                            ></Image>
+                          </Carousel.Item>
+                        ))}
+                      </Carousel>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </MDBRow>
+              </MDBCol>
+            </MDBRow>
 
-          <Row>
-            <h3>Imagen grande</h3>
-          </Row>
+            <MDBRow className="mt-3">
+              <h4>{household.description}</h4>
+            </MDBRow>
 
-          <Row>
-            <h4>Descripcion</h4>
-          </Row>
+            <MDBRow>
+              <h4>Comentarios</h4>
 
-          <Row>
-            <h4>Comentarios</h4>
+              <MDBCol md="6">
+                <h5>Comentario 1</h5>
+              </MDBCol>
 
-            <Col xs={6}>
-              <h5>Comentario 1</h5>
-            </Col>
+              <MDBCol md="6">
+                <h5>Comentario 2</h5>
+              </MDBCol>
+            </MDBRow>
 
-            <Col xs={6}>
-              <h5>Comentario 2</h5>
-            </Col>
-          </Row>
-
-          <Row>
-            <h4>Mapa</h4>
-
-            <Col xs={6}>
-              <MapContainer
-                className="rounded-5 order-lg-last ms-5"
-                style={{
-                  height: "500px",
-                  width: "700px",
-                }}
-                center={position}
-                zoom={15}
-                scrollWheelZoom={false}
+            <MDBRow className="mb-5">
+              <MDBCol
+                className="min-vh-50 d-flex flex-column flex-lg-row"
+                md="11"
               >
-                <MyMap position={position} />
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker icon={iconDefault} position={position}>
-                  <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                  </Popup>
-                </Marker>
-              </MapContainer>
-            </Col>
-          </Row>
-        </Col>
+                <MapContainer
+                  className="rounded-5 order-lg-last"
+                  style={{
+                    height: "400px",
+                    width: "100%",
+                  }}
+                  center={latlngObject}
+                  zoom={16.5}
+                  scrollWheelZoom={false}
+                >
+                  <MyMap position={latlngObject} />
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <HouseholdMarkers requestData={[household]} />
+                </MapContainer>
+              </MDBCol>
+            </MDBRow>
+          </MDBCol>
 
-        <Col xs={4} className="mt-5">
-          <Form className="list-group mb-3 d-flex">
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Form.Label className="small my-0">Precio por Noche</Form.Label>
+          <MDBCol md="4" className="mt-5 align-items-center">
+            <Form className="list-group mb-3 d-flex">
+              <MDBCol>
+                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                  <Form.Label className="small my-0">Precio por Noche {household.price_euro_per_night + ' €'}</Form.Label>
+                </MDBRow>
+                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                  <MDBCol md="6">
+                    <Form.Group className="mw-25" controlId="startDate">
+                      <Form.Label className="small">Fecha Inicio</Form.Label>
+                      <Form.Control type="date" placeholder="inicio" />
+                    </Form.Group>
+                  </MDBCol>
+                  <MDBCol md="6">
+                    <Form.Group className="mw-25" controlId="endDate">
+                      <Form.Label className="small">Fecha Fin</Form.Label>
+                      <Form.Control type="date" placeholder="final" />
+                    </Form.Group>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow className="list-group-item d-flex lh-sm">
+                  <MDBCol className="d-flex justify-content-start space-around">
+                    <Form.Label className="my-auto">Personas :
+                      <input type="number" min="2" max={household.max_capacity} className="mx-2" id="personasInput" name="personas" />
+                    </Form.Label>
+                    <Button variant="primary" type="submit" size='md' className="mx-2 my-auto">
+                      Calcular
+                    </Button>
+                  </MDBCol>
+                </MDBRow>
 
-              <Form.Label className=" mt-2">$12</Form.Label>
-            </Row>
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Col>
-                <Form.Group className="mw-25" controlId="startDate">
-                  <Form.Label className="small">Fecha Inicio</Form.Label>
-                  <Form.Control type="date" placeholder="inicio" />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group className="mw-25" controlId="endDate">
-                  <Form.Label className="small">Fecha Fin</Form.Label>
-                  <Form.Control type="date" placeholder="final" />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Form.Label className="small">Nº huéspedes</Form.Label>
-              <Form.Select className="w-25">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Select>
-            </Row>
+                <MDBRow className="list-group-item d-flex lh-sm">
+                  <MDBCol md="d-flex justify-content-start space-around">
+                    <Form.Label className="my-auto">
+                      Precio Total:
+                    </Form.Label>
+                    <Form.Label className="big justify-content-start mx-4">{price_total + ' €'}</Form.Label>
+                  </MDBCol>
+                </MDBRow>
 
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Col xs={10}>
-                <Form.Label className="big justify-content-start">
-                  Total:
-                </Form.Label>
-              </Col>
-
-              <Col xs={2}>
-                <Form.Label className="big justify-content-end">25$</Form.Label>
-              </Col>
-            </Row>
-
-            <Row className="list-group-item d-flex justify-content-between lh-sm">
-              <Button variant="primary" type="submit">
-                {" "}
-                Reservar{" "}
-              </Button>
-            </Row>
-
+                <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                  <Button variant="success" type="Submit" >
+                    Reservar
+                  </Button>
+                </MDBRow>
+              </MDBCol>
+            </Form>
             <div className="list-group mb-3 mt-5 d-flex">
-              <Row className="list-group-item d-flex justify-content-between lh-sm">
-                <Col xs={3}>
-                  <h4>Foto anfitrion</h4>
-                </Col>
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol md='3'>
+                  <Image roundedCircle={true} src="https://imgur.com/JGmoHaP.jpg"
+                    style={{
+                      height: "50px",
+                      width: "50px"
+                    }}
+                  ></Image>
+                </MDBCol>
+                <MDBCol md='9'>
+                  <h4>{household.host.host_username}</h4>
+                </MDBCol>
+              </MDBRow>
 
-                <Col xs={9}>
-                  <h4>Nombre anfitrion</h4>
-                </Col>
-              </Row>
-
-              <Row className="list-group-item d-flex justify-content-between lh-sm">
-                <Col xs={12}>
-                  <Button variant="primary" type="submit" className="">
+              <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
+                <MDBCol>
+                  {showContact === true ? <p>{household.host.host_email}</p> : <></>}
+                  <Button variant="primary" className="" onClick={contactButtonHandler}>
                     Contactar
                   </Button>
-                </Col>
-              </Row>
+                </MDBCol>
+              </MDBRow>
             </div>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+          </MDBCol>
+        </MDBRow>
+      </Container>
+    </>
   );
 }

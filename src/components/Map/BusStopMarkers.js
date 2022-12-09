@@ -11,9 +11,9 @@ const createBusStopPopup = (data) => {
   } = data;
   return (
     <Popup>
-      <p>Línea: {`${lineCode} ${lineName}`}</p>
-      <p>Parada: {stopName}</p>
-      <p>Sentido: {direction === 1 ? "Ida" : "Vuelta"}</p>
+      <h6>Línea: {`${lineCode} ${lineName}`}</h6>
+      <h6>Parada: {stopName}</h6>
+      <h6>Sentido: {direction === 1 ? "Ida" : "Vuelta"}</h6>
     </Popup>
   );
 };
@@ -21,18 +21,14 @@ const createBusStopPopup = (data) => {
 export const BusStopMarkers = ({ requestData }) => {
   return (
     <>
-      {requestData.map((stop,idx) => {
-        const { lat,lon } = stop;
+      {requestData.map((stop, idx) => {
+        const { lat, lon } = stop;
         return (
-          <Marker 
-            position={[lat, lon]} 
-            key={idx} 
-            icon={iconBusStop}
-          >
+          <Marker position={[lat, lon]} key={idx} icon={iconBusStop}>
             {createBusStopPopup(stop)}
           </Marker>
         );
       })}
     </>
   );
-}
+};

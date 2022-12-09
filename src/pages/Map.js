@@ -9,7 +9,6 @@ import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { BusStopMarkers } from "../components/Map/BusStopMarkers";
 import { BusMarkers } from "../components/Map/BusMarkers";
 import "leaflet/dist/leaflet.css";
-import { NavbarComponent } from "../components/Navbar/Navbar";
 import { LayersControl, LayerGroup } from "react-leaflet";
 
 const MyMap = ({ position }) => {
@@ -35,14 +34,13 @@ export const Map = () => {
 
   return (
     <>
-      <NavbarComponent />
       <Container className="min-vw-100">
         <div className="min-vh-50 d-flex p-5 flex-column flex-lg-row m-5 align-items-center justify-content-evenly gap-5 ">
           <MapContainer
             className="rounded-5 order-lg-last ms-5"
             style={{
               height: "600px",
-              width: "800px",
+              width: "100%",
             }}
             center={position}
             zoom={13}
@@ -53,7 +51,6 @@ export const Map = () => {
             <MyMap position={position} />
 
             <LayersControl position="topright">
-
               <LayersControl.Overlay checked name="Household Marker">
                 <LayerGroup>
                   {householdMarkers && (
@@ -72,12 +69,9 @@ export const Map = () => {
 
               <LayersControl.Overlay name="Buses Marker">
                 <LayerGroup>
-                  {busMarkers && (
-                    <BusMarkers requestData={busMarkers} />
-                  )}
+                  {busMarkers && <BusMarkers requestData={busMarkers} />}
                 </LayerGroup>
               </LayersControl.Overlay>
-
             </LayersControl>
 
             <TileLayer
