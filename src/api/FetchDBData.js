@@ -17,3 +17,9 @@ export const getHouseholdsFromUser = async (username) => {
     const data = await res.json();
     return data;
   };
+
+  export const getBookingsFromUser = async (username) => {
+    const res = await fetch(`${API_BASE_URL}/bookings/from_user/${username}`); 
+    const data = await res.json();
+    return data;
+  };
