@@ -23,7 +23,7 @@ root.render(
           <Route path="/createHousehold" element={<CreateHousehold />} />
           <Route path="/map" element={<Map />} />
           <Route path="/myhouseholds/:username" element={<MyHouseholds />} />
-          <Route path="/mybookings/:username" element={<MyBookings />} />
+          <Route path="/mybookings/" element={<MyBookings />} />
           <Route path="/paypalGateway/:price" element={<PaypalGateway />} />
         </Route>
       </Routes>

@@ -10,7 +10,13 @@ import Image from "react-bootstrap/Image";
 
 export default function MyBookings() {
 
-    const username = useParams().username;
+    const username = undefined;
+
+    try{
+        username = JSON.parse(localStorage.getItem('profile')).name;
+    } catch (e) {
+        console.log(e);
+    }
 
     const getBookingsFromUserMethod = async (username) => {
         if (username === undefined){
@@ -19,16 +25,18 @@ export default function MyBookings() {
         var bookings = await getBookingsFromUser(username);
         return bookings
       };
-        const [bookings, setBookings] = useState([
-          {
-          id: '',
-          start: "",
-          ending: "",
-          host:{ host_username : "" ,  host_email : "" },
-          renter:{ renter_username : "" ,  host_email : "" },
-          household:{ id : "" ,  title : "", address: {street: "", number: "", postal_code: ""}, photo: "" },
-        }]);
+        
+      const [bookings, setBookings] = useState([
+        {
+        id: '',
+        start: "",
+        ending: "",
+        host:{ host_username : "" ,  host_email : "" },
+        renter:{ renter_username : "" ,  host_email : "" },
+        household:{ id : "" ,  title : "", address: {street: "", number: "", postal_code: ""}, photo: "" },
+      }]);
     
+
         useEffect(() => {
           const temp = async () => {
             setBookings(await getBookingsFromUserMethod(username))
