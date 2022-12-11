@@ -36,6 +36,7 @@ export const AlbumComponent = () => {
       temp()
     }, [username]);
 
+
   return (
     <CardGroup className="py-5 bg-white">
       <Container>

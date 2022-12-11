@@ -19,7 +19,7 @@ export const NavbarComponent = ({ auth: Auth }) => {
         <Nav>
           <Nav.Link href="/createHousehold">Crear Anuncio</Nav.Link>
           <Nav.Link href={`/myhouseholds/${username}`}>Mis anuncios</Nav.Link>
-          <Nav.Link href="/mybookings">Mis reservas</Nav.Link>
+          <Nav.Link href={`/mybookings/${username}`}>Mis reservas</Nav.Link>
           <Nav.Link href="/map">Buscar Ubicación</Nav.Link>
         </Nav>
       </Container>
