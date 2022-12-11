@@ -10,9 +10,10 @@ import { useMap } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 import { getHouseholdByID } from "../../src/api/FetchDBData";
 import React from 'react';
-import { useParams, useLocation,Link } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { Carousel, ListGroup } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -26,6 +27,8 @@ const MyMap = ({ position }) => {
 
   return null;
 };
+
+
 
 function useQuery() {
   const { search } = useLocation();
@@ -92,12 +95,62 @@ export default function Household() {
   }, [params]);
 
   let query = useQuery();
+  let min_capacity = 2;
+  let fechaInicio = query.get("fechaInicio");
+  let fechaFin = query.get("fechaFin");
   let personas = query.get("personas");
-  if (personas > household.max_capacity){
+  console.log(personas);
+  if (personas == null) {
+    personas = 0;
+  }
+  if (personas > household.max_capacity) {
     personas = household.max_capacity;
   }
   let price_total = household.price_euro_per_night * personas;
-  //let personas = '2';
+
+  let title = 'Confirmar reserva';
+  let body = '¿Desea confirmar la reserva para ' + personas + ' personas por ' + price_total + ' € ?';
+
+  let enlaceCancel = `/household/${params}?personas=${personas}&?fechaInicio=${fechaInicio}?fechaFin=${fechaFin}`
+  let enlaceOK = `/paypalGateway/${price_total}`;
+
+  const [show, setShow] = useState(false);
+
+  //const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function Reservar() {
+    if (personas >= min_capacity) {
+      return <><Button variant="success" onClick={handleShow}>Reservar</Button>
+      <Modal
+      show={show}
+      animation={false}
+      style={{ opacity: 1 }}
+      centered
+      //   custom class name defined in src/index.css
+      dialogClassName="border-radius-2"
+    >
+      <Modal.Header>
+        <Modal.Title>
+          <h3>{title}</h3>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="d-flex justify-content-center align-items-center">
+        {body}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="success"  size='xxl' href={enlaceOK}>
+          OK  
+        </Button>
+        <Button variant="danger"  size='xxl' href={enlaceCancel}>
+          Cancel
+        </Button>
+      </Modal.Footer>
+    </Modal></>
+    } else {
+      return null;
+    }
+  }
 
   return (
     <>
@@ -182,21 +235,23 @@ export default function Household() {
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
                   <MDBCol md="6">
                     <Form.Group className="mw-25" controlId="startDate">
-                      <Form.Label className="small">Fecha Inicio</Form.Label>
-                      <Form.Control type="date" placeholder="inicio" />
+                      <Form.Label className="small">Fecha Inicio
+                        <Form.Control type="date" placeholder="inicio" />
+                      </Form.Label>
                     </Form.Group>
                   </MDBCol>
                   <MDBCol md="6">
                     <Form.Group className="mw-25" controlId="endDate">
-                      <Form.Label className="small">Fecha Fin</Form.Label>
-                      <Form.Control type="date" placeholder="final" />
+                      <Form.Label className="small">Fecha Fin
+                      <Form.Control type="date" placeholder="final"/>
+                      </Form.Label>
                     </Form.Group>
                   </MDBCol>
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex lh-sm">
                   <MDBCol className="d-flex justify-content-start space-around">
                     <Form.Label className="my-auto">Personas :
-                      <input type="number" min="2" max={household.max_capacity} className="mx-2" id="personasInput" name="personas" />
+                      <input type="number" min={min_capacity} max={household.max_capacity} className="mx-2" id="personasInput" name="personas" />
                     </Form.Label>
                     <Button variant="primary" type="submit" size='md' className="mx-2 my-auto">
                       Calcular
@@ -214,9 +269,7 @@ export default function Household() {
                 </MDBRow>
 
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                  <Button variant="success" type="Submit" >
-                    Reservar
-                  </Button>
+                  {Reservar()}
                 </MDBRow>
               </MDBCol>
             </Form>

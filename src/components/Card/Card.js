@@ -7,7 +7,7 @@ export const CardComponent = ({household,username}) => {
     
     function Editar(){
         if(username !== ''){
-            return <Link to={`/household/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
+            return <Link to={`/editHousehold/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
         }
         return null;
     }

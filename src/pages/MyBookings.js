@@ -1,4 +1,3 @@
-import { NavbarComponent } from "../components/Navbar/Navbar";
 import { MDBRow, MDBCol } from "mdb-react-ui-kit";
 import { Container, ListGroup } from "react-bootstrap";
 
