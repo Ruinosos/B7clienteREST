@@ -10,13 +10,7 @@ import Image from "react-bootstrap/Image";
 
 export default function MyBookings() {
 
-    const username = undefined;
-
-    try{
-        username = JSON.parse(localStorage.getItem('profile')).name;
-    } catch (e) {
-        console.log(e);
-    }
+    const username = useParams().username;
 
     const getBookingsFromUserMethod = async (username) => {
         if (username === undefined){
