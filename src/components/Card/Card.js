@@ -6,7 +6,7 @@ export const CardComponent = ({household,username}) => {
     const endDate = new Date(household['availability'][0][1]['$date']).toLocaleDateString()
     
     function Editar(){
-        if(username !== ''){
+        if(username !== undefined){
             return <Link to={`/editHousehold/${household.id}`}><button type="button" className="btn btn-md btn-success">Editar</button></Link>
         }
         return null;

@@ -44,6 +44,7 @@ export const AlbumComponent = () => {
           {households.map((household) => (
             <CardComponent key={household.id}
               household={household}
+              username={username}
             ></CardComponent>
           ))}
         </Row>
