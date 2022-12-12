@@ -13,11 +13,8 @@ import React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { Carousel, ListGroup } from "react-bootstrap";
-<<<<<<< Updated upstream
 import { Modal } from "react-bootstrap";
-=======
 import { Comment } from "../components/Comment/Comment";
->>>>>>> Stashed changes
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>

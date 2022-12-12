@@ -21,10 +21,10 @@ export const BootstrapModal = ({ heading, body, show, closeModal,enlaceOk,enlace
         {body}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={closeModal} href={enlace}>
+        <Button variant="primary" onClick={closeModal} href={enlaceOk}>
           OK
         </Button>
-        <Button variant="primary" onClick={closeModal} href={enlace}>
+        <Button variant="primary" onClick={closeModal} href={enlaceCancel}>
           Cancel
         </Button>
       </Modal.Footer>

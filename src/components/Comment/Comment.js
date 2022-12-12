@@ -52,7 +52,7 @@ export const Comment = ({ idHousehold }) => {
             >
                 <MDBCardBody>
                     <MDBInput wrapperClass="mb-4" placeholder="Escribir comentario..." />
-                    {comments.map(comment => (
+                    {Array.from(comments).map(comment => (
                         <MDBCard className="mb-4">
                             <MDBCardBody>
                             <p>{comment.text}</p>
