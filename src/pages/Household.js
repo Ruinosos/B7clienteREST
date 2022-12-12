@@ -13,7 +13,11 @@ import React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { HouseholdMarkers } from "../components/Map/HouseholdMarker";
 import { Carousel, ListGroup } from "react-bootstrap";
+<<<<<<< Updated upstream
 import { Modal } from "react-bootstrap";
+=======
+import { Comment } from "../components/Comment/Comment";
+>>>>>>> Stashed changes
 
 //Esto es pa crear una linea divisora
 //<div style={{ borderTop: "2px solid #fff ", marginLeft: 20, marginRight: 20 }}></div>
@@ -152,6 +156,8 @@ export default function Household() {
     }
   }
 
+  console.log(household.id);
+
   return (
     <>
       <Container>
@@ -190,14 +196,7 @@ export default function Household() {
 
             <MDBRow>
               <h4>Comentarios</h4>
-
-              <MDBCol md="6">
-                <h5>Comentario 1</h5>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <h5>Comentario 2</h5>
-              </MDBCol>
+              <Comment className="mt-2 justify-content-left" idHousehold={household.id}/>
             </MDBRow>
 
             <MDBRow className="mb-5">
@@ -267,7 +266,6 @@ export default function Household() {
                     <Form.Label className="big justify-content-start mx-4">{price_total + ' €'}</Form.Label>
                   </MDBCol>
                 </MDBRow>
-
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
                   {Reservar()}
                 </MDBRow>
