@@ -20,7 +20,7 @@ root.render(
         <Route element={<Wrapper />}>
           <Route path="/" element={<Home />} />
           <Route path="/household/:id" element={<Household />} />
-          <Route path="/createHousehold" element={<CreateHousehold />} />
+          <Route path="/CreateHousehold" element={<CreateHousehold />} />
           <Route path="/map" element={<Map />} />
           <Route path="/myhouseholds/:username" element={<MyHouseholds />} />
           <Route path="/mybookings/" element={<MyBookings />} />
