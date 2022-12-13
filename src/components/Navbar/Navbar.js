@@ -1,7 +1,13 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 
 export const NavbarComponent = ({ auth: Auth }) => {
-  const username = 'NicoRomero';
+  let username = undefined;
+
+    try{
+        username = JSON.parse(localStorage.getItem('profile')).name;
+    } catch (e) {
+        console.log(e);
+    }
   return (
     <Navbar bg="light">
       <Container className="d-flex justify-content-start align-items-center mx-1">
