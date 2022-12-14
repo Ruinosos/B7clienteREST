@@ -7,17 +7,17 @@ import React from 'react';
 import { useState } from "react";
 import { useInterval } from "../hooks/useInterval";
 import { createHousehold } from "../api/FetchDBData";
-
+import MyHouseholds from "./MyHouseholds";
 
 export default function CreateHousehold(){
 
   const getCurrentDate = () => {
-    return new Date().toISOString().slice(0, 10);
+    return new Date().toISOString();
   };
   const currentDate = getCurrentDate();
   
   const getLastDate = () => {
-    return new Date(2025,12,12).toISOString().slice(0, 10);
+    return new Date(2025,12,12).toISOString();
   };
   
   const lastDate = getLastDate();
@@ -96,34 +96,75 @@ export default function CreateHousehold(){
 
       const { title, description, street, number, photo, price, max_capacity} = formData;
       var jsonData = {
-        host: {
-          host_username: username,
-          host_email: email,
-        },
-        title: title,
-        description: description,
-        address: {
-          street: "C/Torrequebrada",
-          number: 13,
-          geojson: {
-            type: "Point",
-            coordinates: [22.0, 22.0],
+  
+          "title": title,
+          "description": description,
+          "address": {
+            "street": "C/Torrequebrada",
+            "number": "13",
+            "geojson": {
+              "type": "Point",  
+              "coordinates": [
+                  22.0, 22.0
+              ]
+            }
+          },
+          "photo": [
+            photo
+          ],
+          "num_bathroom": 2,
+          "num_bed": 3,
+          "max_capacity": max_capacity,
+          "price_euro_per_night": price,
+          "rating": 4,
+          "host": {
+            "host_username": username,
+            "host_email": email
+          },
+          "availability": [
+            [
+              {
+                "$date": currentDate
+              },
+              {
+                "$date": lastDate
+              }
+            ],
+          ]
+        }
+        
+        /*
+        "title": title,
+        "description": description,
+        "address": {
+          "street": "C/Torrequebrada",
+          "number": 13,
+          "geojson": {
+            "type": "Point",
+            "coordinates": [22.0, 22.0]
+            }
             },
+            "photo": photo,
+            "num_bathroom": 1,
+            "num_bed": 1,
+            "max_capacity": max_capacity,
+            "price_euro_per_night": price,
+            "rating": 1,
+            "host": {
+              "host_username": username,
+              "host_email": email,
             },
-            photo: photo,
-            num_bathroom: 1,
-            num_bed: 1,
-            max_capacity: max_capacity,
-            price_euro_per_night: price,
-            rating: 1,
-            availability: [
-              [{ date: "2028-12-19 09:26:03.478039"}, { date: "2023-12-19 09:26:03.478039" }],
-              ],
+            "availability": [
+              [{ "date": currentDate}, { "date": lastDate }],
+              ]
               };
+              */
+              
 
               console.log(jsonData);
         
       createHousehold(jsonData);
+
   };
 
   const REFRESH_RATE_MS = 10000;

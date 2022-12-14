@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const API_BASE_URL = "http://localhost:8001";
 
 export const getHouseholdByID = async (id) => {
@@ -23,10 +25,13 @@ export const getBookingsFromUser = async (username) => {
   const data = await res.json();    return data;
 };
 
-export async function createHousehold(jsonData){
+/*export async function createHousehold(jsonData){
   await fetch(`${API_BASE_URL}/households/`, {
     method: 'POST',
-    mode: 'cors',
-    body: jsonData
+    body: JSON.stringify(jsonData)
   });
-}
+}*/
+
+  export async function createHousehold(jsonData){
+    await axios.post(`${API_BASE_URL}/households/`, jsonData);
+  };
