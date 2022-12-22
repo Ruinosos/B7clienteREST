@@ -94,14 +94,14 @@ export default function CreateHousehold(){
       event.preventDefault();
       setIsLoading(true);
 
-      const { title, description, street, number, photo, price, max_capacity} = formData;
+      const { title, description, street, number, photo, price, occupants} = formData;
       var jsonData = {
   
           "title": title,
           "description": description,
           "address": {
-            "street": "C/Torrequebrada",
-            "number": "13",
+            "street": street,
+            "number": number,
             "geojson": {
               "type": "Point",  
               "coordinates": [
@@ -114,7 +114,7 @@ export default function CreateHousehold(){
           ],
           "num_bathroom": 2,
           "num_bed": 3,
-          "max_capacity": max_capacity,
+          "max_capacity": occupants,
           "price_euro_per_night": price,
           "rating": 4,
           "host": {
@@ -132,36 +132,6 @@ export default function CreateHousehold(){
             ],
           ]
         }
-        
-        /*
-        "title": title,
-        "description": description,
-        "address": {
-          "street": "C/Torrequebrada",
-          "number": 13,
-          "geojson": {
-            "type": "Point",
-            "coordinates": [22.0, 22.0]
-            }
-            },
-            "photo": photo,
-            "num_bathroom": 1,
-            "num_bed": 1,
-            "max_capacity": max_capacity,
-            "price_euro_per_night": price,
-            "rating": 1,
-            "host": {
-              "host_username": username,
-              "host_email": email,
-            },
-            "availability": [
-              [{ "date": currentDate}, { "date": lastDate }],
-              ]
-              };
-              */
-              
-
-              console.log(jsonData);
         
       createHousehold(jsonData);
 
@@ -188,9 +158,15 @@ export default function CreateHousehold(){
       }
 
       if (
-        name === "address"
+        name === "street"
       ) {
-        res["address"] = value;
+        res["street"] = value;
+      }
+
+      if (
+        name === "number"
+      ) {
+        res["number"] = value;
       }
 
       if (
@@ -242,10 +218,15 @@ export default function CreateHousehold(){
                             </MDBRow>
 
                             <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
-                            <Form.Group className="mw-25" controlId="address">
+                            <Form.Group className="mw-25" controlId="street">
                                     <Form.Label >Dirección:</Form.Label>
-                                    <Form.Control className="mt-3" type="text" placeholder="Dirección de la vivienda" name="address" value={formData.address} onChange={updateFormData} required />
-                                </Form.Group> 
+                                    <Form.Control className="mt-3" type="text" placeholder="Dirección de la vivienda" name="street" value={formData.street} onChange={updateFormData} required />
+                            </Form.Group> 
+
+                            <Form.Group className="mw-25" controlId="number">
+                                    <Form.Label >Numero vivienda:</Form.Label>
+                                    <Form.Control className="mt-3" type="text" placeholder="Numero de la vivienda" name="number" value={formData.number} onChange={updateFormData} required />
+                            </Form.Group> 
                             </MDBRow>
 
                             <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
@@ -258,7 +239,7 @@ export default function CreateHousehold(){
                                 <MDBCol>
                                     <Form.Group className="mw-25" controlId="maxNumOccupants">
                                         <Form.Label>Número máximo de huéspedes:</Form.Label>
-                                        <Form.Control className="mt-3" type="number" name="occupants" placeholder="Ej: 5" value={formData.max_capacity} onChange={updateFormData} required/>
+                                        <Form.Control className="mt-3" type="number" name="occupants" placeholder="Ej: 5" value={formData.occupants} onChange={updateFormData} required/>
                                     </Form.Group>
                                 </MDBCol>
                             </MDBRow>
@@ -269,6 +250,8 @@ export default function CreateHousehold(){
                                     <Form.Control className="mt-3" type="file" name="photo" multiple placeholder="Dirección de la vivienda" accept=".png" value={formData.photo} onChange={updateFormData} required />
                                 </Form.Group> 
                             </MDBRow>
+
+                            
 
                             <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
                             <Button variant="primary" type="submit">
