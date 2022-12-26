@@ -10,11 +10,9 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import { Row, Col } from "react-bootstrap";
 import { getProfileData } from "./api/Authentication";
-import * as dotenv from "dotenv";
-dotenv.config();
 
 export const Wrapper = () => {
-  const CLIENT_ID = process.env.CLIENT_ID;
+  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
   const GoogleAuth = () => {
     const [profile, setProfile] = useState(
       JSON.parse(localStorage.getItem("profile"))

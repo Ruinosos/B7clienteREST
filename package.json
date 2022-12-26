@@ -10,7 +10,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.1",
     "bootstrap": "^3.4.1",
-    "dotenv": "^16.0.3",
     "json2typescript": "^1.5.1",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.3",
