@@ -36,13 +36,23 @@ export const AlbumComponent = () => {
       temp()
     }, [username]);
 
+    function emptyList(){
+      if(households.length === 0){
+          return <h3 className="mx-auto">No hay anuncios disponibles</h3>
+      }else{
+          return null
+      }
+  }
+
   return (
     <CardGroup className="py-5 bg-white">
       <Container>
         <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {emptyList()}
           {households.map((household) => (
             <CardComponent key={household.id}
               household={household}
+              username={username}
             ></CardComponent>
           ))}
         </Row>

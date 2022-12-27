@@ -1,7 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-export const BootstrapModal = ({ heading, body, show, closeModal }) => {
+export const BootstrapModal = ({ heading, body, show, closeModal,enlaceOk,enlaceCancel }) => {
   return (
     <Modal
       show={show}
@@ -21,8 +21,11 @@ export const BootstrapModal = ({ heading, body, show, closeModal }) => {
         {body}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={closeModal}>
+        <Button variant="primary" onClick={closeModal} href={enlaceOk}>
           OK
+        </Button>
+        <Button variant="primary" onClick={closeModal} href={enlaceCancel}>
+          Cancel
         </Button>
       </Modal.Footer>
     </Modal>
