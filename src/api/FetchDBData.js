@@ -20,11 +20,39 @@ export const getHouseholdsFromUser = async (username) => {
     return data;
 };
 
+export const getHouseholdsFromUserVivienda = async (username,vivienda) => {
+  function buildUrl(username, vivienda) {
+    let url = `${API_BASE_URL}/households/filter/username/description`;
+    const params = [];
+    if (username) {
+      params.push(`username=${username}`);
+    }
+    if (vivienda) {
+      params.push(`description=${vivienda}`);
+    }
+    if (params.length > 0) {
+      url += '?' + params.join('&');
+    }
+    return url;
+  }
+  const url = buildUrl(username, vivienda);
+  const res = await fetch(url);
+  const data = await res.json();
+  return data;
+};
+
 export const getBookingsFromUser = async (username) => {
   const res = await fetch(`${API_BASE_URL}/bookings/from_user/${username}`); 
   const data = await res.json();
   return data;
 };
+
+export const searchHousehold = async (vivienda) => {
+  const res = await fetch(`${API_BASE_URL}/households/filter/description?description=${vivienda}`); 
+  const data = await res.json();
+  return data;
+};
+
 
 
 

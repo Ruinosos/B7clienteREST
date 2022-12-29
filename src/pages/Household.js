@@ -103,7 +103,7 @@ export default function Household() {
   if (personas > household.max_capacity) {
     personas = household.max_capacity;
   }
-
+  
   const getCurrentDate = () => {
     return new Date().toISOString().slice(0, 10);
   };
@@ -127,9 +127,20 @@ export default function Household() {
     " noches por " +
     price_total +
     " € ?";
+  
+    let startingDatetime = new Date();
+    let endingDatetime = new Date();
+
+  if(startingDate !== undefined && startingDate !== null){
+    let startingTimestamp = Date.parse(startingDate);
+    startingDatetime = new Date(startingTimestamp);
+  }if(endingDate !== undefined && endingDate !== null){
+    let endingTimestamp = Date.parse(endingDate);
+    endingDatetime = new Date(endingTimestamp);
+  }
 
   let enlaceCancel = `/household/${params}?startingDate=${startingDate}&endingDate=${endingDate}&personas=${personas}`;
-  let enlaceOK = `/paypalGateway/${price_total}`;
+  let enlaceOK = `/paypalGateway/${price_total}?startingDate=${startingDatetime.toISOString()}&endingDate=${endingDatetime.toISOString()}&household=${params}`;
 
   const [show, setShow] = useState(false);
 
@@ -174,6 +185,7 @@ export default function Household() {
       return null;
     }
   }
+
   const [formData, setFormData] = useState({
     personas: personas,
     startingDate: startingDate,
@@ -206,7 +218,7 @@ export default function Household() {
       };
     });
   };
-
+  
   return (
     <>
       <Container>
@@ -314,20 +326,19 @@ export default function Household() {
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex lh-sm">
                   <MDBCol md="6">
-                    <Form.Label>
-                      Personas :
+                  <Form.Group className="col-12 mx-auto" controlId="FormPersonas">
+                    <Form.Label> Personas :</Form.Label>
                       <Form.Control
                         type="number"
                         placeholder="personas"
+                        name="personas"
                         min={min_capacity}
                         max={household.max_capacity}
                         className="mx-auto"
-                        id="personasInput"
-                        name="personas"
                         value={formData.personas}
                         onChange={updateFormData}
                       />
-                    </Form.Label>
+                    </Form.Group>
                   </MDBCol>
                   <MDBCol md="6">
                     <Button

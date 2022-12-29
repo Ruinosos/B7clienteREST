@@ -45,7 +45,6 @@ export const Wrapper = () => {
             <Image
               className='rounded-circle'
               src={profile.picture}
-              referrerpolicy='no-referrer'
               alt='user profile'
               width={32}
               height={32}

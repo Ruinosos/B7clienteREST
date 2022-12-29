@@ -1,25 +1,32 @@
 import { Form, Button, FormGroup } from "react-bootstrap";
 import { useState } from "react";
-import AlbumComponent from "../components/Album/Album";
-import { useParams } from "react-router-dom";
+import AlbumComponent2 from "../components/Album/AlbumFilter";
+import { useParams, useLocation } from "react-router-dom";
+import React from "react";
 import { getHouseholdsFromUserVivienda } from "../api/FetchDBData";
 
-export default function Home() {
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
+export default function HomeFilter() {
 
   const username = useParams().username;
-
+  const query = useQuery();
+  const vivienda = query.get("vivienda");
   const [formData, setFormData] = useState({
-    vivienda: "",
+    vivienda: vivienda,
   });
-
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     const { vivienda } = formData;
-    getHouseholdsFromUserVivienda(username,vivienda);
-    window.location.href = `/filter?vivienda=${vivienda}`;  
+    await getHouseholdsFromUserVivienda(username,vivienda);
+    window.location.href = `/filter?vivienda=${vivienda}`;   
   };
 
   const updateFormData = (event) => {
@@ -38,7 +45,6 @@ export default function Home() {
     });
   };
 
-
   return (
     <>
       <h1 className="d-flex justify-content-center"> Anuncios </h1>
@@ -51,7 +57,7 @@ export default function Home() {
             </Button>
           </FormGroup>
       </Form>
-      <AlbumComponent/>
+      <AlbumComponent2 vivienda = {vivienda}/>
     </>
   );
 }

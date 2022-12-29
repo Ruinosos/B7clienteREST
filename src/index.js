@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PaypalGateway from "./pages/PaypalGateway";
 import { Wrapper } from "./AppWrapper";
 import MyBookings from "./pages/MyBookings";
+import HomeFilter from "./pages/HomeFilter";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +20,7 @@ root.render(
       <Routes>
         <Route element={<Wrapper />}>
           <Route path="/" element={<Home />} />
+          <Route path="/filter" element={<HomeFilter/>} />
           <Route path="/household/:id" element={<Household />} />
           <Route path="/CreateHousehold" element={<CreateHousehold />} />
           <Route path="/map" element={<Map />} />
