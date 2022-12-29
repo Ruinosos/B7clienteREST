@@ -22,8 +22,11 @@ export const getHouseholdsFromUser = async (username) => {
 
 export const getBookingsFromUser = async (username) => {
   const res = await fetch(`${API_BASE_URL}/bookings/from_user/${username}`); 
-  const data = await res.json();    return data;
+  const data = await res.json();
+  return data;
 };
+
+
 
 /*export async function createHousehold(jsonData){
   await fetch(`${API_BASE_URL}/households/`, {
@@ -34,4 +37,10 @@ export const getBookingsFromUser = async (username) => {
 
   export async function createHousehold(jsonData){
     await axios.post(`${API_BASE_URL}/households/`, jsonData);
+  };
+
+  export async function createBooking(jsonData) {
+    const res = await axios.post(`${API_BASE_URL}/bookings/`,jsonData); 
+    const data = await res.json();
+    return data;
   };
