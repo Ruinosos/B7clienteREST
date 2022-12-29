@@ -74,7 +74,7 @@ export const CardComponent = ({ household, username, children }) => {
               Mostrar
             </button>
           </Link>
-          {Editar()}
+          {<Editar />}
         </ButtonGroup>
       </Card.Body>
     </Card>
