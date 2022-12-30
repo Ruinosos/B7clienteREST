@@ -144,7 +144,6 @@ export default function EditHousehold(){
       if (
         name === "street"
       ) {
-        console.log(res["street"]);
         res["street"] = value;
       }
 

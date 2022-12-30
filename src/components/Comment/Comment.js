@@ -2,6 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import { useInterval } from "../../hooks/useInterval";
 import { getCommentsFromHousehold } from "../../api/FetchCommentsHousehold";
+import { createComment } from "../../api/FetchCommentsHousehold";
 import {
   MDBCard,
   MDBCardBody,
@@ -65,6 +66,10 @@ export const Comment = ({ idHousehold }) => {
         heading: "",
     });
 
+    const username = JSON.parse(localStorage.getItem('profile')).username;
+    const email = JSON.parse(localStorage.getItem('profile')).email;
+    const photo = JSON.parse(localStorage.getItem('profile')).picture;
+
     const submitHandler = async (event) => {
         event.preventDefault();
         setIsLoading(true);
@@ -72,18 +77,18 @@ export const Comment = ({ idHousehold }) => {
         const { text, valoration } = formData;
         var jsonData = {
             user: {
-                renter_username: JSON.parse(localStorage("profile").username),
-                renter_email: JSON.parse(localStorage("profile").email)
+                renter_username: username,
+                renter_email: email
             },
-            photo: JSON.parse(localStorage("profile").picture),
+            photo: photo,
             household: {
                 id: idHousehold
             },
             text: text,
             valoration: valoration
-          }
-        //console.log(jsonData);
-        //createHousehold(jsonData);
+        }
+        console.log(jsonData);
+        createComment(jsonData);
   
     };
 
@@ -94,9 +99,7 @@ export const Comment = ({ idHousehold }) => {
     const updateFormData = (event) => {
         const { name, value } = event.target;
         const res = { [name]: value };
-        
         setFormData((prev) => {
-            console.log(prev);
             if (
             name === "text"
             ) {
@@ -125,13 +128,13 @@ export const Comment = ({ idHousehold }) => {
             >
                 <MDBCardBody>
                     <MDBRow>
-                        <Form>
+                        <Form onSubmit={submitHandler}>
                             <MDBCol xs={10}>
-                                <Form.Group>
-                                    <Form.Control type="text" name="comment" placeholder="Escribe tu comentario..." value={formData.text} onChange={updateFormData} required />
+                                <Form.Group controlId="text">
+                                    <Form.Control type="text" name="text" placeholder="Escribe tu comentario..." value={formData.text} onChange={updateFormData} required />
                                 </Form.Group>
-                                <Form.Group>
-                                    <Form.Control className="mt-4 mb-4" type="number" name="rating" placeholder="Valoracion: 0..5" value={formData.valoration} onChange={updateFormData} required />
+                                <Form.Group controlId="valoration">
+                                    <Form.Control className="mt-4 mb-4" type="number" name="valoration" placeholder="Valoracion: 0..5" value={formData.valoration} onChange={updateFormData} required />
                                 </Form.Group>
                             </MDBCol>
                             <MDBCol xs={2}>
