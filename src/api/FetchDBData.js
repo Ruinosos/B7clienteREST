@@ -53,6 +53,11 @@ export const searchHousehold = async (vivienda) => {
   return data;
 };
 
+export const deleteHouseholdByID = async (id) => {
+  await axios.delete(`${API_BASE_URL}/households/${id}`);
+}
+
+
 
 
 
@@ -65,6 +70,10 @@ export const searchHousehold = async (vivienda) => {
 
   export async function createHousehold(jsonData){
     await axios.post(`${API_BASE_URL}/households/`, jsonData);
+  };
+
+  export async function editHousehold(id, jsonData){
+    await axios.put(`${API_BASE_URL}/households/${id}`, jsonData);
   };
 
   export async function createBooking(jsonData) {

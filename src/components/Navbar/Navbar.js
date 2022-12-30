@@ -5,7 +5,7 @@ export const NavbarComponent = ({ auth: Auth }) => {
   let username = undefined;
 
   try {
-    username = JSON.parse(localStorage.getItem("profile")).sub;
+    username = JSON.parse(localStorage.getItem("profile")).username;
   } catch (e) {
     console.log(e);
   }

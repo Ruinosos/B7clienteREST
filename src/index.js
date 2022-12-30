@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Household from "./pages/Household";
 import CreateHousehold from "./pages/CreateHousehold";
+import EditHousehold from "./pages/EditHousehold";
 import MyHouseholds from "./pages/MyHouseholds";
 import { Map } from "./pages/Map";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,6 +26,7 @@ root.render(
           <Route path="/filter" element={<HomeFilter/>} />
           <Route path='/household/:id' element={<Household />} />
           <Route path='/CreateHousehold' element={<CreateHousehold />} />
+          <Route path='/EditHousehold/:id' element={<EditHousehold />} />
           <Route path='/map' element={<Map />} />
           <Route path='/myhouseholds/:username' element={<MyHouseholds />} />
           <Route path='/mybookings/:username' element={<MyBookings />} />
