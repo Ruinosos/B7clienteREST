@@ -103,28 +103,44 @@ export default function Household() {
   if (personas > household.max_capacity) {
     personas = household.max_capacity;
   }
-
+  
   const getCurrentDate = () => {
     return new Date().toISOString().slice(0, 10);
   };
   const currentDate = getCurrentDate();
 
-  
-  let difference = Date.parse(endingDate)- Date.parse(startingDate);
+
+  let difference = Date.parse(endingDate) - Date.parse(startingDate);
   let totalDays = Math.ceil(difference / (1000 * 3600 * 24));
+  let price_total = 0;
   
-  let price_total = household.price_euro_per_night * totalDays;
+  if (!isNaN(totalDays)) {
+    price_total = household.price_euro_per_night * totalDays;
+  }
 
   let title = "Confirmar reserva";
   let body =
     "¿Desea confirmar la reserva para " +
     personas +
-    " personas por " +
+    " personas con " +
+    totalDays + 
+    " noches por " +
     price_total +
     " € ?";
+  
+    let startingDatetime = new Date();
+    let endingDatetime = new Date();
+
+  if(startingDate !== undefined && startingDate !== null){
+    let startingTimestamp = Date.parse(startingDate);
+    startingDatetime = new Date(startingTimestamp);
+  }if(endingDate !== undefined && endingDate !== null){
+    let endingTimestamp = Date.parse(endingDate);
+    endingDatetime = new Date(endingTimestamp);
+  }
 
   let enlaceCancel = `/household/${params}?startingDate=${startingDate}&endingDate=${endingDate}&personas=${personas}`;
-  let enlaceOK = `/paypalGateway/${price_total}`;
+  let enlaceOK = `/paypalGateway/${price_total}?startingDate=${startingDatetime.toISOString()}&endingDate=${endingDatetime.toISOString()}&household=${params}`;
 
   const [show, setShow] = useState(false);
 
@@ -169,6 +185,7 @@ export default function Household() {
       return null;
     }
   }
+
   const [formData, setFormData] = useState({
     personas: personas,
     startingDate: startingDate,
@@ -192,7 +209,7 @@ export default function Household() {
       ) {
         res["startingDate"] = value;
       }
-      if(name==="personas"){
+      if (name === "personas") {
         res["personas"] = value;
       }
       return {
@@ -201,9 +218,7 @@ export default function Household() {
       };
     });
   };
-
-  console.log(household.id);
-
+  
   return (
     <>
       <Container>
@@ -242,7 +257,7 @@ export default function Household() {
 
             <MDBRow>
               <h4>Comentarios</h4>
-              <Comment className="mt-2 justify-content-left" idHousehold={household.id}/>
+              <Comment className="mt-2 justify-content-left" idHousehold={household.id} />
             </MDBRow>
 
             <MDBRow className="mb-5">
@@ -281,7 +296,7 @@ export default function Household() {
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex justify-content-between lh-sm">
                   <MDBCol md="6">
-                    <Form.Group className="col-6 mx-auto" controlId="formStartDate">
+                    <Form.Group className="col-12 mx-auto" controlId="formStartDate">
                       <Form.Label>Inicio</Form.Label>
                       <Form.Control
                         type="date"
@@ -295,7 +310,7 @@ export default function Household() {
                     </Form.Group>
                   </MDBCol>
                   <MDBCol md="6">
-                    <Form.Group className="col-6 mx-auto" controlId="formEndDate">
+                    <Form.Group className="col-12 mx-auto" controlId="formEndDate">
                       <Form.Label>Fin</Form.Label>
                       <Form.Control
                         type="date"
@@ -310,26 +325,27 @@ export default function Household() {
                   </MDBCol>
                 </MDBRow>
                 <MDBRow className="list-group-item d-flex lh-sm">
-                  <MDBCol className="d-flex justify-content-start space-around my-auto">
-                    <Form.Label>
-                      Personas :
+                  <MDBCol md="6">
+                  <Form.Group className="col-12 mx-auto" controlId="FormPersonas">
+                    <Form.Label> Personas :</Form.Label>
                       <Form.Control
                         type="number"
                         placeholder="personas"
+                        name="personas"
                         min={min_capacity}
                         max={household.max_capacity}
-                        className="mx-2"
-                        id="personasInput"
-                        name="personas"
+                        className="mx-auto"
                         value={formData.personas}
                         onChange={updateFormData}
                       />
-                    </Form.Label>
+                    </Form.Group>
+                  </MDBCol>
+                  <MDBCol md="6">
                     <Button
                       variant="primary"
                       type="submit"
                       size="md"
-                      className="d flex mx-2 my-auto justify-content-end"
+                      className="d-flex mt-4 mx-1 justify-content-end"
                     >
                       Calcular
                     </Button>

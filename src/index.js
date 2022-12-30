@@ -11,6 +11,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PaypalGateway from "./pages/PaypalGateway";
 import { Wrapper } from "./AppWrapper";
 import MyBookings from "./pages/MyBookings";
+import HomeFilter from "./pages/HomeFilter";
+import Profile from "./pages/Profile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,13 +20,15 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route element={<Wrapper />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/household/:id" element={<Household />} />
-          <Route path="/CreateHousehold" element={<CreateHousehold />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/myhouseholds/:username" element={<MyHouseholds />} />
-          <Route path="/mybookings/:username" element={<MyBookings />} />
-          <Route path="/paypalGateway/:price" element={<PaypalGateway />} />
+          <Route path='/profile/:id' element={<Profile />} />
+          <Route path='/' element={<Home />} />
+          <Route path="/filter" element={<HomeFilter/>} />
+          <Route path='/household/:id' element={<Household />} />
+          <Route path='/CreateHousehold' element={<CreateHousehold />} />
+          <Route path='/map' element={<Map />} />
+          <Route path='/myhouseholds/:username' element={<MyHouseholds />} />
+          <Route path='/mybookings/:username' element={<MyBookings />} />
+          <Route path='/paypalGateway/:price' element={<PaypalGateway />} />
         </Route>
       </Routes>
     </BrowserRouter>

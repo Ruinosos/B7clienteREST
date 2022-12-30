@@ -41,11 +41,10 @@ export const Wrapper = () => {
     return profile && token && token !== undefined && profile !== undefined ? (
       <Row className='align-items-center'>
         <Col>
-          <Link to={"/profile"}>
+          <Link to={"/profile/" + profile.username}>
             <Image
               className='rounded-circle'
               src={profile.picture}
-              referrerpolicy='no-referrer'
               alt='user profile'
               width={32}
               height={32}

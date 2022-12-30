@@ -50,7 +50,7 @@ export default function MyBookings() {
                     <MDBRow>
                     <MDBCol xs={6}>
                         {bookings.map((booking) => (
-                        <ListGroup>
+                        <ListGroup key={booking.id}>
                             <ListGroup.Item>
 
                                 <MDBRow>
