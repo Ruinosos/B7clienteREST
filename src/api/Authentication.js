@@ -1,5 +1,8 @@
 import axios from "axios";
-const AUTHENTICATION_URL = "http://localhost:8001/auth";
+const urlAPI = "https://roomtrackrservidor.fly.dev";
+//const urlAPI = "http://localhost:8001";
+const AUTHENTICATION_URL = `${urlAPI}/auth`;
+
 const formatProfileData = data => {
   const { photos, names, emailAddresses, resourceName } = data;
   return {

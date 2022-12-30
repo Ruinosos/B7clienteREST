@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8001";
+const urlAPI = "https://roomtrackrservidor.fly.dev";
+//const urlAPI = "http://localhost:8001";
+const API_BASE_URL = urlAPI;
 
 export const getHouseholdByID = async (id) => {
     const res = await fetch(`${API_BASE_URL}/households/${id}`);

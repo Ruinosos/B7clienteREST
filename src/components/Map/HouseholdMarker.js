@@ -8,7 +8,8 @@ const showRouteTo = () => {
 };
 
 const createHouseholdPopup = (data) => {
-  const { title, price_euro_per_night, rating, photo, address } = data;
+  const { id, title, price_euro_per_night, rating, photo, address } = data;
+  const urlHousehold = `/household/${id}`;
   return (
     <Popup>
       <Image
@@ -26,7 +27,7 @@ const createHouseholdPopup = (data) => {
         <h6>Cómo llegar?</h6>
       </button>
       <br />
-      <Link className="mt-2 d-inline-block" to="/household">
+      <Link className="mt-2 d-inline-block" to={urlHousehold}>
         <h6>Ver detalles</h6>
       </Link>
     </Popup>
