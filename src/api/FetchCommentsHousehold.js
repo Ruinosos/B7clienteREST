@@ -1,5 +1,8 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8001";
+const urlAPI = "https://roomtrackrservidor.fly.dev";
+
+//const urlAPI = "http://localhost:8001";
+const BASE_URL = urlAPI;
 
 
 const getCommentsFromHousehold = async (id) => {
