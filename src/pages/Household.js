@@ -38,6 +38,8 @@ function useQuery() {
 export default function Household() {
   const params = useParams().id;
 
+  console.log(JSON.parse(localStorage.getItem("profile")));
+
   const getHousehold = async (params) => {
     const household = await getHouseholdByID(params);
     return household;

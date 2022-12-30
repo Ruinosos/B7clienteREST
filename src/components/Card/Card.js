@@ -1,4 +1,5 @@
 import { ButtonGroup, Card, Carousel, Image } from "react-bootstrap";
+import { deleteHouseholdByID } from "../../api/FetchDBData";
 import { Link } from "react-router-dom";
 
 export const CardComponent = ({ household, username, children }) => {
@@ -12,7 +13,7 @@ export const CardComponent = ({ household, username, children }) => {
   function Editar() {
     if (username !== undefined) {
       return (
-        <Link to={`/editHousehold/${household.id}`}>
+        <Link to={`/EditHousehold/${household.id}`}>
           <button type='button' className='btn btn-md btn-success'>
             Editar
           </button>
@@ -20,6 +21,21 @@ export const CardComponent = ({ household, username, children }) => {
       );
     }
     return null;
+  }
+
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
+  async function eliminarHandler(){
+    console.log("Eliminar");
+    await deleteHouseholdByID(household.id);
+    refreshPage();
+  }
+  function Eliminar(){
+    if (username !== undefined) {
+      return <button onClick={eliminarHandler} className='btn btn-md btn-danger'>Eliminar</button>
+    }
   }
 
   return (
@@ -75,6 +91,7 @@ export const CardComponent = ({ household, username, children }) => {
             </button>
           </Link>
           {<Editar />}
+          {<Eliminar />}
         </ButtonGroup>
       </Card.Body>
     </Card>
