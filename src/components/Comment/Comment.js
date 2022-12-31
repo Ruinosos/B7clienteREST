@@ -96,7 +96,6 @@ export const Comment = ({ idHousehold }) => {
         }
         console.log(jsonData);
         await createComment(jsonData);
-        //navigate('/');
         refreshPage();
   
     };

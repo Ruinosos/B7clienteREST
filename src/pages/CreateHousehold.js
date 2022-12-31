@@ -145,8 +145,6 @@ export default function CreateHousehold(){
       console.log(jsonData);
       await createHousehold(jsonData);
       navigate('/myhouseholds/' + username);
-      //navigate('/');
-
   };
 
   const REFRESH_RATE_MS = 10000;
