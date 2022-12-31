@@ -13,6 +13,7 @@ import {
   MDBRow,
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export const Comment = ({ idHousehold }) => { 
