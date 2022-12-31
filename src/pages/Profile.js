@@ -14,12 +14,12 @@ const Profile = () => {
     setProfile(JSON.parse(localStorage.getItem("profile")));
     const fetchUser = async id => {
       const bookingResponse = await fetch(
-        "http://localhost:8001/bookings/from_user/" + id
+        "https://roomtrackrservidor.fly.dev/bookings/from_user/" + id
       );
       const bookings = await bookingResponse.json();
 
       const householdResponse = await fetch(
-        "http://localhost:8001/households/from_user/" + id
+        "https://roomtrackrservidor.fly.dev/households/from_user/" + id
       );
       const households = await householdResponse.json();
       setBookings(bookings);
