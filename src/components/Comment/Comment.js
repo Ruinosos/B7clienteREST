@@ -95,7 +95,7 @@ export const Comment = ({ idHousehold }) => {
         }
         console.log(jsonData);
         createComment(jsonData);
-        navigate('/household/' + idHousehold);
+        //navigate('/household/' + idHousehold);
         //refreshPage();
   
     };
