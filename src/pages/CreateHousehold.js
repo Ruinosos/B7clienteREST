@@ -22,18 +22,23 @@ export default function CreateHousehold(){
   const getLastDate = () => {
     return new Date(2025,12,12).toISOString();
   };
+
+  const username = undefined;
+  const email = undefined;
+
+  if(localStorage.getItem('profile')){
+    username = JSON.parse(localStorage.getItem('profile')).name;
+
+    email = JSON.parse(localStorage.getItem('profile')).email;
+  }else{
+    navigate('/');
+  }
   
   const lastDate = getLastDate();
 
   const navigate = useNavigate();
 
-  if (!localStorage.getItem('profile')) {
-    navigate('/');
-  }
-
-  const username = JSON.parse(localStorage.getItem('profile')).name;
-
-  const email = JSON.parse(localStorage.getItem('profile')).email;
+  
 
   const [urlImg, setUrlImg] = useState({
     urlImg: "https://via.placeholder.com/150",
