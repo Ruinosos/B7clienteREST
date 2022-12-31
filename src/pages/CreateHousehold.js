@@ -24,9 +24,16 @@ export default function CreateHousehold(){
   
   const lastDate = getLastDate();
 
-  const username = JSON.parse(localStorage.getItem('profile')).name;
+  const username = undefined;
+  const email = undefined;
 
-  const email = JSON.parse(localStorage.getItem('profile')).email;
+  if(localStorage.getItem('profile')) {
+
+    username = JSON.parse(localStorage.getItem('profile')).name;
+
+    email = JSON.parse(localStorage.getItem('profile')).email;
+
+  }
 
   const [urlImg, setUrlImg] = useState({
     urlImg: "https://via.placeholder.com/150",

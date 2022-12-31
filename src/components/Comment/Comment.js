@@ -17,6 +17,17 @@ import { useEffect, useState } from "react";
 
 export const Comment = ({ idHousehold }) => { 
 
+    const username = undefined;
+    const email = undefined;
+    const photo = undefined;
+
+    if(localStorage.getItem('profile')){
+        username = JSON.parse(localStorage.getItem('profile')).username;
+        email = JSON.parse(localStorage.getItem('profile')).email;
+        photo = JSON.parse(localStorage.getItem('profile')).picture;
+    }
+    
+
     const getComments = async (idHousehold) => {
         const comments = await(getCommentsFromHousehold(idHousehold));
         console.log(comments + " sdkjfhksdj");
@@ -66,9 +77,7 @@ export const Comment = ({ idHousehold }) => {
         heading: "",
     });
 
-    const username = JSON.parse(localStorage.getItem('profile')).username;
-    const email = JSON.parse(localStorage.getItem('profile')).email;
-    const photo = JSON.parse(localStorage.getItem('profile')).picture;
+    
 
     const submitHandler = async (event) => {
         event.preventDefault();
