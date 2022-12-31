@@ -17,6 +17,8 @@ import { useEffect, useState } from "react";
 
 export const Comment = ({ idHousehold }) => { 
 
+    const navigate = useNavigate();
+
     function refreshPage() {
         window.location.reload(false);
       }
@@ -93,7 +95,8 @@ export const Comment = ({ idHousehold }) => {
         }
         console.log(jsonData);
         createComment(jsonData);
-        refreshPage();
+        navigate('/household/' + idHousehold);
+        //refreshPage();
   
     };
 
