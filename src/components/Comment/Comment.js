@@ -17,6 +17,10 @@ import { useEffect, useState } from "react";
 
 export const Comment = ({ idHousehold }) => { 
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     const getComments = async (idHousehold) => {
         const comments = await(getCommentsFromHousehold(idHousehold));
         console.log(comments + " sdkjfhksdj");
@@ -89,6 +93,7 @@ export const Comment = ({ idHousehold }) => {
         }
         console.log(jsonData);
         createComment(jsonData);
+        refreshPage();
   
     };
 
