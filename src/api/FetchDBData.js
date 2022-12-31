@@ -18,6 +18,7 @@ export const getHouseholds = async () => {
 
 export const getHouseholdsFromUser = async (username) => {
     const res = await fetch(`${API_BASE_URL}/households/filter/username?name=${username}`, {mode: 'no-cors'}); 
+    console.log(res);
     const data = await res.json();
     return data;
 };
