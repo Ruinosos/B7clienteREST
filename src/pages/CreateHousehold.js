@@ -30,8 +30,6 @@ export default function CreateHousehold(){
     username = JSON.parse(localStorage.getItem('profile')).name;
 
     email = JSON.parse(localStorage.getItem('profile')).email;
-  }else{
-    navigate('/');
   }
   
   const lastDate = getLastDate();
