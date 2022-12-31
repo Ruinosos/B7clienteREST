@@ -24,9 +24,6 @@ const createHouseholdPopup = (data) => {
       <h5>{title}</h5>
       <h5>{price_euro_per_night} €/noche </h5>
       <h5>Valoración: {rating}</h5>
-      <button onClick={() => showRouteTo(address)}>
-        <h6>Cómo llegar?</h6>
-      </button>
       <br />
       <Link className="mt-2 d-inline-block" to={urlHousehold}>
         <h6>Ver detalles</h6>
