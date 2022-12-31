@@ -3,7 +3,7 @@ import {
   googleLogout,
   useGoogleLogin,
 } from "@react-oauth/google";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import NavbarComponent from "./components/Navbar/Navbar";
 import { useState } from "react";
 import Image from "react-bootstrap/Image";
@@ -14,6 +14,7 @@ import { getProfileData } from "./api/Authentication";
 export const Wrapper = () => {
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
   const GoogleAuth = () => {
+    const navigate = useNavigate();
     const [profile, setProfile] = useState(
       JSON.parse(localStorage.getItem("profile"))
     );
@@ -36,6 +37,7 @@ export const Wrapper = () => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("profile");
       googleLogout();
+      navigate("/");
     };
     console.log(token, profile);
     return profile && token && token !== undefined && profile !== undefined ? (
