@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { iconDefault } from "./markerLeafLet";
 import Image from "react-bootstrap/Image";
 
+
 const showRouteTo = () => {
   // TODO: Shows in map the route from current to
 };
 
 const createHouseholdPopup = (data) => {
-  const { title, price_euro_per_night, rating, photo, address } = data;
+  const { id, title, price_euro_per_night, rating, photo, address } = data;
+  const urlHousehold = `/household/${id}`;
   return (
     <Popup>
       <Image
@@ -26,7 +28,7 @@ const createHouseholdPopup = (data) => {
         <h6>Cómo llegar?</h6>
       </button>
       <br />
-      <Link className="mt-2 d-inline-block" to="/household">
+      <Link className="mt-2 d-inline-block" to={urlHousehold}>
         <h6>Ver detalles</h6>
       </Link>
     </Popup>

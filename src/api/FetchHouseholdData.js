@@ -1,7 +1,6 @@
-const host = "3.127.55.81";
-const port = "8001";
-const BASE_URL = `http://${host}:${port}`;
-
+const urlAPI = "https://roomtrackrservidor.fly.dev";
+//const urlAPI = "http://localhost:8001";
+const BASE_URL = urlAPI
 const getHouseholdNearbyByCoords = async (
   lat,
   lon,
