@@ -144,7 +144,7 @@ export default function CreateHousehold(){
         }
       console.log(jsonData);
       createHousehold(jsonData);
-      navigate('/myhouseholds');
+      navigate('/myhouseholds/' + username);
 
   };
 
