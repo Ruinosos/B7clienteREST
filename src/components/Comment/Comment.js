@@ -95,7 +95,7 @@ export const Comment = ({ idHousehold }) => {
             valoration: valoration
         }
         console.log(jsonData);
-        createComment(jsonData);
+        await createComment(jsonData);
         navigate('/');
         //refreshPage();
   
