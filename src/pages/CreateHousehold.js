@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateHousehold(){
 
+  const navigate = useNavigate();
+
   const getCurrentDate = () => {
     return new Date().toISOString();
   };
@@ -30,11 +32,13 @@ export default function CreateHousehold(){
     username = JSON.parse(localStorage.getItem('profile')).name;
 
     email = JSON.parse(localStorage.getItem('profile')).email;
+  }else{
+    navigate('/login');
   }
   
   const lastDate = getLastDate();
 
-  const navigate = useNavigate();
+  
 
   
 
