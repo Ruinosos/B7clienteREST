@@ -17,6 +17,10 @@ import { useEffect, useState } from "react";
 
 export const Comment = ({ idHousehold }) => { 
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     const username = undefined;
     const email = undefined;
     const photo = undefined;
@@ -98,6 +102,7 @@ export const Comment = ({ idHousehold }) => {
         }
         console.log(jsonData);
         createComment(jsonData);
+        refreshPage();
   
     };
 
