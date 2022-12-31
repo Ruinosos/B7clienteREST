@@ -156,6 +156,7 @@ export const Comment = ({ idHousehold }) => {
                                     height="25"
                                 />
                                 <p className="small mb-0 ms-2">{comment.user.renter_username}</p>
+                                <p>{comment.valoration}</p>
                                 </div>
                             </div>
                             </MDBCardBody>
