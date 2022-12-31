@@ -27,6 +27,10 @@ export default function CreateHousehold(){
 
   const navigate = useNavigate();
 
+  if (!localStorage.getItem('profile')) {
+    navigate('/login');
+  }
+
   const username = JSON.parse(localStorage.getItem('profile')).name;
 
   const email = JSON.parse(localStorage.getItem('profile')).email;
