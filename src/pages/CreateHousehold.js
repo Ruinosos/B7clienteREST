@@ -10,6 +10,7 @@ import { createHousehold } from "../api/FetchDBData";
 import CloudinaryUploadWidget from "../components/Cloudinary/UploadCloudinary";
 import {getCoords} from "../api/FetchOpenData";
 import MyHouseholds from "./MyHouseholds";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateHousehold(){
 
@@ -23,6 +24,8 @@ export default function CreateHousehold(){
   };
   
   const lastDate = getLastDate();
+
+  const navigate = useNavigate();
 
   const username = JSON.parse(localStorage.getItem('profile')).name;
 
@@ -141,6 +144,7 @@ export default function CreateHousehold(){
         }
       console.log(jsonData);
       createHousehold(jsonData);
+      navigate('/myhouseholds');
 
   };
 
