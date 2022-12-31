@@ -143,9 +143,9 @@ export default function CreateHousehold(){
           ]
         }
       console.log(jsonData);
-      createHousehold(jsonData);
-      //navigate('/myhouseholds/' + username);
-      navigate('/');
+      await createHousehold(jsonData);
+      navigate('/myhouseholds/' + username);
+      //navigate('/');
 
   };
 
