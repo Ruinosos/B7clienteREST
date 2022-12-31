@@ -146,7 +146,7 @@ export const Comment = ({ idHousehold }) => {
                         <MDBCard className="mb-4">
                             <MDBCardBody>
                             <p>{comment.text}</p>
-
+                            <p>Valoration: {comment.valoration}</p>
                             <div className="d-flex justify-content-between">
                                 <div className="d-flex flex-row align-items-center">
                                 <MDBCardImage
@@ -156,7 +156,6 @@ export const Comment = ({ idHousehold }) => {
                                     height="25"
                                 />
                                 <p className="small mb-0 ms-2">{comment.user.renter_username}</p>
-                                <p>{comment.valoration}</p>
                                 </div>
                             </div>
                             </MDBCardBody>
