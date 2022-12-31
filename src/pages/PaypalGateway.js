@@ -79,7 +79,7 @@ const ButtonWrapper = ({ currency, showSpinner }) => {
                             "host_email": "string@gmail.com"
                         },
                         "renter": {
-                            "renter_username": JSON.parse(localStorage.getItem("profile")).sub,
+                            "renter_username": JSON.parse(localStorage.getItem("profile")).username,
                             "renter_email": JSON.parse(localStorage.getItem("profile")).email
                         },
                         "household": {
