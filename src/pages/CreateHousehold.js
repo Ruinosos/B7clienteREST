@@ -34,7 +34,9 @@ export default function CreateHousehold(){
     username = JSON.parse(localStorage.getItem('profile')).username;
     email = JSON.parse(localStorage.getItem('profile')).email;
   }catch(e){
+    if(JSON.parse(localStorage.getItem('profile')).username === null){
     navigate('/');
+    }
   }
 
   
