@@ -25,12 +25,14 @@ export default function CreateHousehold(){
     return new Date(2025,12,12).toISOString();
   };
 
-  const username = JSON.parse(localStorage.getItem('profile')).username;
-  const email = JSON.parse(localStorage.getItem('profile')).email;
-
   if(localStorage.getItem('profile') === null){
     navigate('/');
   }
+
+  const username = JSON.parse(localStorage.getItem('profile')).username;
+  const email = JSON.parse(localStorage.getItem('profile')).email;
+
+  
   
 
   /*
