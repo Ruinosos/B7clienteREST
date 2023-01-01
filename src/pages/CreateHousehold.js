@@ -25,21 +25,11 @@ export default function CreateHousehold(){
     return new Date(2025,12,12).toISOString();
   };
 
-  const username = undefined;
-  const email = undefined;
+  const username = JSON.parse(localStorage.getItem('profile')).username;
+  const email = JSON.parse(localStorage.getItem('profile')).email;
 
-  
-  try{
-    username = JSON.parse(localStorage.getItem('profile')).username;
-    email = JSON.parse(localStorage.getItem('profile')).email;
-  }catch(e){
-    if(e instanceof TypeError){
-      console.log(e);
-      navigate('/');
-    }else{
-
-    }
-    console.log(e);
+  if(localStorage.getItem('profile') === null){
+    navigate('/');
   }
   
 
