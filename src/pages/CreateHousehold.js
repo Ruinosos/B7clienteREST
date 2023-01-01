@@ -29,7 +29,7 @@ export default function CreateHousehold(){
   const email = undefined;
 
   if(localStorage.getItem('profile')){
-    username = JSON.parse(localStorage.getItem('profile')).name;
+    username = JSON.parse(localStorage.getItem('profile')).username;
 
     email = JSON.parse(localStorage.getItem('profile')).email;
   }else{
