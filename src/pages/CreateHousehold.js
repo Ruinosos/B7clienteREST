@@ -28,8 +28,14 @@ export default function CreateHousehold(){
   const username = undefined;
   const email = undefined;
 
-  console.log(localStorage.getItem('profile'));
+  try{
+    username = JSON.parse(localStorage.getItem('profile')).username;
+    email = JSON.parse(localStorage.getItem('profile')).email;
+  }catch(e){
+    navigate('/');
+  }
 
+  /*
   if(!localStorage.getItem('profile')){
 
     navigate('/');
@@ -40,6 +46,7 @@ export default function CreateHousehold(){
     email = JSON.parse(localStorage.getItem('profile')).email;
     
   }
+  */
   
   const lastDate = getLastDate();
 
