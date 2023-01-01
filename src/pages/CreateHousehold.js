@@ -27,15 +27,14 @@ export default function CreateHousehold(){
 
   console.log(localStorage.getItem('profile'));
 
-  if(!localStorage.getItem('profile')){
+  try{
+    localStorage.getItem('profile');
+  }catch(e){
     navigate('/');
   }
 
   const username = JSON.parse(localStorage.getItem('profile')).username;
   const email = JSON.parse(localStorage.getItem('profile')).email;
-
-  
-  
 
   /*
   if(localStorage.getItem('profile') === null){
