@@ -30,13 +30,11 @@ export default function CreateHousehold(){
   const username = undefined;
   const email = undefined;
 
-  try{
+  if(JSON.parse(localStorage.getItem('profile')) === null){
+    navigate('/');
+  }else{
     username = JSON.parse(localStorage.getItem('profile')).username;
     email = JSON.parse(localStorage.getItem('profile')).email;
-  }catch(e){
-    if(JSON.parse(localStorage.getItem('profile')).username === null){
-    navigate('/');
-    }
   }
 
   
