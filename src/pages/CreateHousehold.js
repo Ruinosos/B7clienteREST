@@ -28,8 +28,10 @@ export default function CreateHousehold(){
   const username = undefined;
   const email = undefined;
 
-  if(localStorage.getItem('profile')){
-    //username = JSON.parse(localStorage.getItem('profile')).username;
+  console.log(localStorage.getItem('profile'));
+
+  if(localStorage.getItem('profile') != undefined){
+    username = JSON.parse(localStorage.getItem('profile')).username;
 
     email = JSON.parse(localStorage.getItem('profile')).email;
   }else{
