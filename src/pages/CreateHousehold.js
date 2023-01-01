@@ -25,7 +25,9 @@ export default function CreateHousehold(){
     return new Date(2025,12,12).toISOString();
   };
 
-  if(localStorage.getItem('profile') === null){
+  console.log(localStorage.getItem('profile'));
+
+  if(!localStorage.getItem('profile')){
     navigate('/');
   }
 
